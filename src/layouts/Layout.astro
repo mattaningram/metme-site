@@ -1,4 +1,19 @@
 ---
+import { ClientRouter } from 'astro:transitions'
+export interface Props {
+  title?: string
+  description?: string
+  pageColor?: string
+  class?: string
+}
+
+const {
+  title = 'MetMe: Remember Everyone You Meet',
+  description = 'Add contacts instantly with natural language. Voice or text, on-device AI parses everything. Fully private, powered by Apple Intelligence.',
+  pageColor = 'oklch(76.9% 0.188 70.08)',
+  class: className,
+} = Astro.props
+
 import 'ress/dist/ress.min.css'
 import '@animxyz/core/dist/animxyz.min.css'
 import '@styles/main.scss'
@@ -8,14 +23,33 @@ import '@styles/tailwind.css'
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+
+    <slot name="head" />
+
+    <ClientRouter />
   </head>
-  <body>
+
+  <body class:list={className} style={`--page-color: ${pageColor}`}>
     <slot />
   </body>
 </html>
