@@ -173,62 +173,6 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
   </main>
 </Layout>
 
-<!-- Motion animations -->
-<script>
-  import { animate, stagger, inView } from 'motion'
-
-  function initAnimations() {
-    // Hero entrance
-    const heroEls = document.querySelectorAll(
-      '.mm-hero__icon, .mm-hero__title, .mm-hero__sub, .mm-hero__private, .mm-hero .mm-cta-btn, .mm-hero .mm-requirements',
-    )
-    if (heroEls.length) {
-      animate(
-        heroEls,
-        { opacity: [0, 1], y: [30, 0] } as any,
-        { duration: 0.7, delay: stagger(0.12), easing: [0.25, 1, 0.5, 1] } as any,
-      )
-    }
-
-    // Value props
-    const valueItems = document.querySelectorAll('.mm-value__item')
-    if (valueItems.length) {
-      inView(
-        document.querySelector('.mm-value')!,
-        () => {
-          animate(
-            valueItems,
-            { opacity: [0, 1], y: [40, 0] } as any,
-            { duration: 0.6, delay: stagger(0.15), easing: [0.25, 1, 0.5, 1] } as any,
-          )
-        },
-        { amount: 0.2 },
-      )
-    }
-
-    // Bottom CTA
-    const bottomCTA = document.querySelector('.mm-bottom-cta')
-    if (bottomCTA) {
-      inView(
-        bottomCTA,
-        () => {
-          animate(
-            bottomCTA.querySelectorAll(
-              '.mm-bottom-cta__icon, .mm-bottom-cta__title, .mm-bottom-cta__desc, .mm-cta-btn, .mm-requirements__wrap',
-            ),
-            { opacity: [0, 1], y: [30, 0] } as any,
-            { duration: 0.6, delay: stagger(0.1), easing: [0.25, 1, 0.5, 1] } as any,
-          )
-        },
-        { amount: 0.3 },
-      )
-    }
-  }
-
-  // Run on load and on Astro page transitions
-  document.addEventListener('astro:page-load', initAnimations)
-</script>
-
 <style lang="scss">
   @use '../styles/scssVariables' as *;
 
@@ -439,7 +383,6 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
   }
 
   .mm-value__item {
-    opacity: 0;
   }
 
   .mm-value__icon {

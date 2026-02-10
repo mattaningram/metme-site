@@ -552,16 +552,6 @@ const timelineGroups = [
       // Hide all gates at the start of each cycle
       hideAllGates()
 
-      // Phone entrance (first run only)
-      if (phone.style.opacity !== '1') {
-        await animate(
-          phone,
-          { opacity: [0, 1], y: [60, 0], scale: [0.92, 1] } as any,
-          { duration: 0.8, easing: [...EASE] } as any,
-        ).finished
-        phone.style.opacity = '1'
-      }
-
       // ===== TIMELINE =====
       setActiveView('timeline')
       showGate('timeline')

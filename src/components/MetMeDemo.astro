@@ -179,16 +179,6 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     if (!phone || !prompt || !mic || !contextPill || !textWrap || !contact || !deleteBtn || !saveBtn || !saved) return
 
     try {
-      // Phone enters (only on first run)
-      if (phone.style.opacity !== '1') {
-        await animate(
-          phone,
-          { opacity: [0, 1], y: [60, 0], scale: [0.92, 1] } as any,
-          { duration: 0.8, easing: [0.25, 1, 0.5, 1] } as any,
-        ).finished
-        phone.style.opacity = '1'
-      }
-
       // Prompt fades in
       prompt.style.display = ''
       await animate(prompt, { opacity: [0, 1] }, { duration: 0.5 }).finished
