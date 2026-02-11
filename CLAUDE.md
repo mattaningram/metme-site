@@ -13,7 +13,7 @@
 - Astro
 - Animations: AnimXYZ
 - Icons: Astro Icon
-- Styling: SCSS + Tailwind
+- Styling: CSS + Tailwind
 - Fonts: Nunito Sans
 - ClassNames: Astro's class:list syntax
 

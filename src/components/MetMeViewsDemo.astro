@@ -437,7 +437,7 @@ const timelineGroups = [
 
       <!-- ===== TAB BAR ===== -->
       <div class="mmv__tabbar">
-        <button class="mmv__tabbar-btn mmv__tabbar-btn--active" data-tab="timeline" aria-label="Timeline">
+        <button class="mmv__tabbar-btn active" data-tab="timeline" aria-label="Timeline">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
             ><path
               d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
@@ -521,7 +521,7 @@ const timelineGroups = [
     })
     // Update tabbar buttons
     document.querySelectorAll('.mmv__tabbar-btn').forEach((btn) => {
-      btn.classList.toggle('mmv__tabbar-btn--active', (btn as HTMLElement).dataset.tab === viewName)
+      btn.classList.toggle('active', (btn as HTMLElement).dataset.tab === viewName)
     })
   }
 
@@ -701,9 +701,7 @@ const timelineGroups = [
   document.addEventListener('astro:page-load', initViewsAnimation)
 </script>
 
-<style lang="scss">
-  @use '../styles/scssVariables' as *;
-
+<style>
   /* ── Layout ── */
   .mmv {
     padding: 4rem 2rem 6rem;
@@ -717,7 +715,7 @@ const timelineGroups = [
     align-items: center;
     gap: 2.5rem;
 
-    @media (width >= $breakpoint-md) {
+    @media (width >= 48rem) {
       flex-direction: row;
       align-items: center;
       justify-content: center;
@@ -728,7 +726,7 @@ const timelineGroups = [
   .mmv__text {
     text-align: center;
 
-    @media (width >= $breakpoint-md) {
+    @media (width >= 48rem) {
       text-align: left;
       max-width: 22rem;
     }
@@ -768,8 +766,8 @@ const timelineGroups = [
     border-color: var(--color-amber-500);
     background: linear-gradient(
       135deg,
-      color-alpha(var(--color-amber-500), 0.12) 0%,
-      color-alpha(var(--color-amber-500), 0.04) 100%
+      color-mix(in oklch, var(--color-amber-500) 12%, transparent) 0%,
+      color-mix(in oklch, var(--color-amber-500) 4%, transparent) 100%
     );
   }
 
@@ -847,9 +845,13 @@ const timelineGroups = [
     top: 0;
     z-index: 2;
     background: var(--color-stone-900);
-    background: linear-gradient(90deg, var(--color-stone-900) 40%, color-alpha(var(--color-stone-900), 0) 100%);
+    background: linear-gradient(
+      90deg,
+      var(--color-stone-900) 40%,
+      color-mix(in oklch, var(--color-stone-900) 0%, transparent) 100%
+    );
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.6rem;
     }
   }
@@ -862,7 +864,7 @@ const timelineGroups = [
     opacity: 0;
 
     & + & {
-      border-top: 1px solid color-alpha(var(--color-stone-800), 0.4);
+      border-top: 1px solid color-mix(in oklch, var(--color-stone-800) 40%, transparent);
     }
   }
 
@@ -870,7 +872,7 @@ const timelineGroups = [
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: color-alpha(var(--color-amber-500), 0.15);
+    background: color-mix(in oklch, var(--color-amber-500) 15%, transparent);
     color: var(--color-amber-400);
     display: grid;
     place-content: center;
@@ -878,7 +880,7 @@ const timelineGroups = [
     font-weight: 700;
     flex-shrink: 0;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       width: 34px;
       height: 34px;
       font-size: 0.7rem;
@@ -890,7 +892,7 @@ const timelineGroups = [
     font-weight: 500;
     color: var(--color-stone-200);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.85rem;
     }
   }
@@ -923,7 +925,11 @@ const timelineGroups = [
     top: 0;
     z-index: 2;
     background: var(--color-stone-900);
-    background: linear-gradient(90deg, var(--color-stone-900) 40%, color-alpha(var(--color-stone-900), 0) 100%);
+    background: linear-gradient(
+      90deg,
+      var(--color-stone-900) 40%,
+      color-mix(in oklch, var(--color-stone-900) 0%, transparent) 100%
+    );
     font-size: 0.72rem;
     font-weight: 700;
     color: var(--color-stone-300);
@@ -943,7 +949,7 @@ const timelineGroups = [
       text-transform: uppercase;
       padding: 2px 0;
 
-      @media (width >= $breakpoint-sm) {
+      @media (width >= 40rem) {
         font-size: 0.52rem;
       }
     }
@@ -965,7 +971,7 @@ const timelineGroups = [
     gap: 2px;
     position: relative;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.6rem;
       padding: 6px 0;
     }
@@ -998,7 +1004,7 @@ const timelineGroups = [
         background: oklch(50% 0.15 260);
         z-index: -1;
 
-        @media (width >= $breakpoint-sm) {
+        @media (width >= 40rem) {
           width: 22px;
           height: 22px;
         }
@@ -1018,7 +1024,7 @@ const timelineGroups = [
     transform: translateY(100%);
     z-index: 5;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       padding: 28px 22px 72px;
     }
   }
@@ -1027,7 +1033,7 @@ const timelineGroups = [
     border-radius: 0 0 34px 34px;
     padding-bottom: 48px;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       border-radius: 0 0 39px 39px;
     }
   }
@@ -1053,7 +1059,7 @@ const timelineGroups = [
     font-weight: 600;
     color: var(--color-stone-100);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.8rem;
     }
   }
@@ -1062,7 +1068,7 @@ const timelineGroups = [
     font-size: 0.6rem;
     color: var(--color-stone-400);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.65rem;
     }
 
@@ -1079,7 +1085,7 @@ const timelineGroups = [
     color: var(--color-stone-100);
     margin-bottom: 2px;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.78rem;
     }
   }
@@ -1089,7 +1095,7 @@ const timelineGroups = [
     color: var(--color-stone-400);
     margin-bottom: 10px;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.65rem;
     }
   }
@@ -1122,7 +1128,7 @@ const timelineGroups = [
       flex-shrink: 0;
     }
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.65rem;
 
       svg {
@@ -1161,7 +1167,7 @@ const timelineGroups = [
       height: 100%;
     }
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       width: 20px;
       height: 26px;
     }
@@ -1200,7 +1206,7 @@ const timelineGroups = [
     background: linear-gradient(transparent, var(--color-stone-950) 100%);
     z-index: 6;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       padding: 10px 0 20px;
     }
   }
@@ -1217,13 +1223,13 @@ const timelineGroups = [
       width: 18px;
       height: 18px;
 
-      @media (width >= $breakpoint-sm) {
+      @media (width >= 40rem) {
         width: 20px;
         height: 20px;
       }
     }
 
-    &--active {
+    &.active {
       color: var(--color-amber-400);
     }
   }

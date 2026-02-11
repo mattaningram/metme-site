@@ -358,9 +358,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
   document.addEventListener('astro:page-load', initDemoAnimation)
 </script>
 
-<style lang="scss">
-  @use '../styles/scssVariables' as *;
-
+<style>
   /* ── Demo Animation Section ── */
   .mm-demo {
     display: flex;
@@ -375,7 +373,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     align-items: center;
     padding: 56px 0 22px;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       padding: 64px 0 26px;
     }
   }
@@ -383,7 +381,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
   .mm-demo__prompt-container {
     padding: 0 22px;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       padding: 0 26px;
     }
   }
@@ -395,7 +393,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     opacity: 0;
     align-self: flex-start;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 1.3rem;
     }
   }
@@ -409,7 +407,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     align-self: flex-start;
     position: relative;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 1.2rem;
     }
   }
@@ -424,7 +422,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
 
   .mm-demo__word--highlighted {
     color: var(--color-amber-100);
-    text-shadow: 0 0 12px color-alpha(var(--color-amber-500), 0.5);
+    text-shadow: 0 0 12px color-mix(in oklch, var(--color-amber-500) 50%, transparent);
   }
 
   /* Scanning amber gradient sweep – masked to text */
@@ -466,7 +464,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     align-items: baseline;
     gap: 12px;
     padding: 8px 24px;
-    border-bottom: 1px dashed color-alpha(var(--color-stone-800), 0.5);
+    border-bottom: 1px dashed color-mix(in oklch, var(--color-stone-800) 50%, transparent);
     opacity: 0;
   }
 
@@ -477,7 +475,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     text-transform: uppercase;
     letter-spacing: 0.04em;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       width: 70px;
       font-size: 0.7rem;
     }
@@ -488,7 +486,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     font-weight: 500;
     color: var(--color-stone-100);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 0.9rem;
     }
   }
@@ -509,7 +507,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
       height: 18px;
     }
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       bottom: 32px;
       width: 44px;
       height: 44px;
@@ -522,18 +520,18 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     border: 1px solid oklch(35% 0.08 25);
     color: oklch(60% 0.15 25);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       left: 24px;
     }
   }
 
   .mm-demo__save {
     right: 20px;
-    background: color-alpha(var(--color-amber-500), 0.1);
+    background: color-mix(in oklch, var(--color-amber-500) 10%, transparent);
     border: 1px solid var(--color-amber-500);
     color: var(--color-stone-50);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       right: 24px;
     }
   }
@@ -551,7 +549,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     border-radius: 0 0 34px 34px;
     opacity: 0;
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       border-radius: 0 0 39px 39px;
       padding: 36px 28px 32px;
     }
@@ -605,7 +603,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     bottom: 24px;
     transform: translateX(-50%);
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       bottom: 28px;
     }
   }
@@ -617,7 +615,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     border: 1px solid var(--color-stone-600);
     border-radius: 20px;
     white-space: nowrap;
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       bottom: 94px;
     }
   }
@@ -638,7 +636,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
       flex-shrink: 0;
     }
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       font-size: 12px;
       padding: 4px 8px;
 
@@ -671,7 +669,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
       height: 20px;
     }
 
-    @media (width >= $breakpoint-sm) {
+    @media (width >= 40rem) {
       width: 56px;
       height: 56px;
     }
@@ -687,10 +685,10 @@ import PhoneFrame from '@components/PhoneFrame.astro'
   @keyframes mic-pulse {
     0%,
     100% {
-      box-shadow: 0 0 0 0 color-alpha(var(--color-amber-500), 0.3);
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-amber-500) 30%, transparent);
     }
     50% {
-      box-shadow: 0 0 0 10px color-alpha(var(--color-amber-500), 0);
+      box-shadow: 0 0 0 10px color-mix(in oklch, var(--color-amber-500) 0%, transparent);
     }
   }
 </style>
