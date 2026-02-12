@@ -24,7 +24,7 @@ export default defineConfig({
   integrations: [
     icon(),
     favicons({
-      input: './src/media/metme/metme-ios-icon.png',
+      input: './public/metme-ios-icon.png',
       name: 'MetMe',
       short_name: 'MetMe',
     }),
