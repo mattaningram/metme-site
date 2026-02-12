@@ -198,6 +198,7 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
     width: 100px;
     height: 100px;
     margin-bottom: 1.5rem;
+    will-change: transform;
     filter: drop-shadow(0 6px 30px color-mix(in oklch, var(--color-amber-500) 35%, transparent));
     transition:
       transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
@@ -260,7 +261,7 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
     flex-shrink: 0;
     display: inline-block;
     position: relative;
-    top: 0.1rem;
+    vertical-align: text-top;
   }
 
   /* ── CTA Button (MetMe style gradient) ── */
@@ -366,9 +367,6 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
       grid-template-columns: repeat(3, 1fr);
       gap: 2.5rem;
     }
-  }
-
-  .mm-value__item {
   }
 
   .mm-value__icon {
@@ -477,10 +475,8 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
   /* ── Footer ── */
   .mm-footer {
     display: grid;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    text-align: left;
+
+    text-align: center;
     padding: 2rem;
     color: rgba(white, 0.75);
 
@@ -496,6 +492,13 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
       &:hover {
         color: var(--color-stone-50);
       }
+    }
+
+    @media (width >= 40rem) {
+      text-align: left;
+      position: absolute;
+      bottom: 0;
+      left: 0;
     }
   }
 </style>

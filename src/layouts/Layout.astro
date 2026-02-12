@@ -39,6 +39,12 @@ import '@styles/global.css'
 
     <meta name="generator" content={Astro.generator} />
 
+    {
+      import.meta.env.MODE === 'production' && (
+        <script src="https://cdn.visitors.now/v.js" data-token="426ec9b0-f6e1-472f-8bb4-42d7818ea02d" />
+      )
+    }
+
     <slot name="head" />
 
     <ClientRouter />
@@ -53,7 +59,6 @@ import '@styles/global.css'
   html {
     overflow-x: hidden;
     background-color: var(--color-stone-950);
-    background-image: linear-gradient(var(--color-stone-900), var(--color-stone-950));
     color: var(--color-stone-100);
     font-family: 'Nunito Sans', system-ui, sans-serif;
   }
