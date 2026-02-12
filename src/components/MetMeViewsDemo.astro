@@ -30,22 +30,6 @@ const timelineGroups = [
     <div class="mmv__text">
       <h2 class="mmv__heading">Three ways to remember</h2>
       <p class="mmv__sub">Every contact saves when and where you met. Browse your network across time and space.</p>
-      <div class="mmv__features">
-        <div class="mmv__feature mmv__feature--active" data-view="timeline">
-          <span class="mmv__feature-title">Timeline</span>
-          <span class="mmv__feature-desc">Scroll through everyone you've met, organized by when you met them.</span>
-        </div>
-        <div class="mmv__feature" data-view="calendar">
-          <span class="mmv__feature-title">Calendar</span>
-          <span class="mmv__feature-desc"
-            >See which days you met new people. Tap any date for details and birthdays.</span
-          >
-        </div>
-        <div class="mmv__feature" data-view="map">
-          <span class="mmv__feature-title">Map</span>
-          <span class="mmv__feature-desc">See where you've met people pinned on a map. Tap to recall the context.</span>
-        </div>
-      </div>
     </div>
 
     <!-- Right: phone demo -->
@@ -463,6 +447,26 @@ const timelineGroups = [
         </button>
       </div>
     </PhoneFrame>
+
+    <!-- Feature explanation cards (below phone on mobile, left column on desktop) -->
+    <div class="mmv__features">
+      <div class="mmv__features-track">
+        <div class="mmv__feature mmv__feature--active" data-view="timeline">
+          <span class="mmv__feature-title">Timeline</span>
+          <span class="mmv__feature-desc">Scroll through everyone you've met, organized by when you met them.</span>
+        </div>
+        <div class="mmv__feature" data-view="calendar">
+          <span class="mmv__feature-title">Calendar</span>
+          <span class="mmv__feature-desc"
+            >See which days you met new people. Tap any date for details and birthdays.</span
+          >
+        </div>
+        <div class="mmv__feature" data-view="map">
+          <span class="mmv__feature-title">Map</span>
+          <span class="mmv__feature-desc">See where you've met people pinned on a map. Tap to recall the context.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -471,6 +475,7 @@ const timelineGroups = [
 
   const EASE = [0.25, 1, 0.5, 1] as const
   const EXIT_EASE = [0.5, 0, 0.75, 0] as const
+  const VIEWS = ['timeline', 'calendar', 'map']
 
   let abortController: AbortController | null = null
 
@@ -496,9 +501,41 @@ const timelineGroups = [
     })
   }
 
+  function animateMobileCarousel(viewName: string, instant = false) {
+    const track = document.querySelector('.mmv__features-track') as HTMLElement
+    const container = document.querySelector('.mmv__features') as HTMLElement
+    if (!track || !container || getComputedStyle(container).overflow !== 'hidden') return
+
+    const viewIndex = VIEWS.indexOf(viewName)
+    if (viewIndex === -1) return
+
+    const cards = track.querySelectorAll('.mmv__feature')
+    if (cards.length === 0) return
+
+    const card = cards[viewIndex] as HTMLElement
+    const containerWidth = container.offsetWidth
+    const targetX = -(card.offsetLeft - (containerWidth - card.offsetWidth) / 2)
+
+    if (instant) {
+      animate(track, { x: targetX } as any, { duration: 0 } as any)
+    } else {
+      animate(track, { x: targetX } as any, { duration: 0.5, easing: [...EASE] } as any)
+    }
+  }
+
   function initViewsAnimation() {
     const section = document.querySelector('.mmv')
     if (!section) return
+
+    animateMobileCarousel('timeline', true)
+
+    window.addEventListener('resize', () => {
+      const activeCard = document.querySelector('.mmv__features .mmv__feature--active') as HTMLElement
+      if (activeCard) {
+        animateMobileCarousel(activeCard.dataset.view || 'timeline', true)
+      }
+    })
+
     inView(
       section,
       () => {
@@ -515,7 +552,7 @@ const timelineGroups = [
   }
 
   function setActiveView(viewName: string) {
-    // Update left-side feature cards
+    // Update feature cards
     document.querySelectorAll('.mmv__feature').forEach((card) => {
       card.classList.toggle('mmv__feature--active', (card as HTMLElement).dataset.view === viewName)
     })
@@ -523,6 +560,8 @@ const timelineGroups = [
     document.querySelectorAll('.mmv__tabbar-btn').forEach((btn) => {
       btn.classList.toggle('active', (btn as HTMLElement).dataset.tab === viewName)
     })
+    // Animate mobile carousel
+    animateMobileCarousel(viewName)
   }
 
   async function runViewsAnimation(signal: AbortSignal) {
@@ -716,16 +755,18 @@ const timelineGroups = [
     gap: 2.5rem;
 
     @media (width >= 48rem) {
-      flex-direction: row;
-      align-items: center;
+      display: grid;
+      grid-template-columns: minmax(0, 22rem) auto;
+      grid-template-rows: 1fr auto auto 1fr;
+      gap: 0 4rem;
       justify-content: center;
-      gap: 4rem;
     }
   }
 
   .mmv__text {
     @media (width >= 48rem) {
-      max-width: 22rem;
+      grid-column: 1;
+      grid-row: 2;
     }
   }
 
@@ -744,9 +785,29 @@ const timelineGroups = [
   }
 
   .mmv__features {
+    @media (width >= 48rem) {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    @media (width < 48rem) {
+      overflow: hidden;
+      margin-left: -2rem;
+      margin-right: -2rem;
+      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+      /* -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%); */
+    }
+  }
+
+  .mmv__features-track {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+
+    @media (width < 48rem) {
+      flex-direction: row;
+      gap: 1rem;
+    }
   }
 
   .mmv__feature {
@@ -757,6 +818,11 @@ const timelineGroups = [
     transition:
       background 0.5s cubic-bezier(0.25, 1, 0.5, 1),
       border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+
+    @media (width < 48rem) {
+      flex: 0 0 75%;
+      min-width: 0;
+    }
   }
 
   .mmv__feature--active {
@@ -798,6 +864,11 @@ const timelineGroups = [
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media (width >= 48rem) {
+      grid-column: 2;
+      grid-row: 1 / -1;
+    }
   }
 
   /* ── Views (overlapping, absolute) ── */
