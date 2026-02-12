@@ -6,9 +6,9 @@ const { class: className } = Astro.props
 ---
 
 <div class:list={['phone-frame', className]}>
-  <div class="phone-frame__phone">
-    <div class="phone-frame__island"></div>
-    <div class="phone-frame__screen">
+  <div class="phone-frame__phone relative w-[300px] bg-stone-950 border-[1.5px] border-solid border-stone-800 rounded-[40px] p-[6px] sm:w-[340px] sm:rounded-[46px] sm:p-[7px]">
+    <div class="phone-frame__island absolute top-4 left-1/2 -translate-x-1/2 w-[72px] h-5 bg-black rounded-[10px] z-10 sm:top-[18px] sm:w-20 sm:h-[22px] sm:rounded-[11px]"></div>
+    <div class="phone-frame__screen relative aspect-[9/19.5] rounded-[34px] overflow-hidden pointer-events-none sm:rounded-[39px]">
       <slot />
     </div>
   </div>
@@ -17,52 +17,12 @@ const { class: className } = Astro.props
 
 <style>
   .phone-frame__phone {
-    position: relative;
-    width: 300px;
-    background: var(--color-stone-950);
-    border: 1.5px solid var(--color-stone-800);
-    border-radius: 40px;
-    padding: 6px;
     box-shadow:
       0 25px 80px oklch(0% 0 0 / 0.6),
       0 0 60px color-mix(in oklch, var(--color-amber-500) 8%, transparent);
-
-    @media (width >= 40rem) {
-      width: 340px;
-      border-radius: 46px;
-      padding: 7px;
-    }
-  }
-
-  .phone-frame__island {
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 72px;
-    height: 20px;
-    background: #000;
-    border-radius: 10px;
-    z-index: 10;
-
-    @media (width >= 40rem) {
-      top: 18px;
-      width: 80px;
-      height: 22px;
-      border-radius: 11px;
-    }
   }
 
   .phone-frame__screen {
-    position: relative;
-    aspect-ratio: 9 / 19.5;
     background: linear-gradient(180deg, var(--color-stone-900) 5%, var(--color-stone-950) 100%);
-    border-radius: 34px;
-    overflow: hidden;
-    pointer-events: none;
-
-    @media (width >= 40rem) {
-      border-radius: 39px;
-    }
   }
 </style>

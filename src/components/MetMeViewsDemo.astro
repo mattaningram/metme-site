@@ -24,29 +24,29 @@ const timelineGroups = [
 ---
 
 <!-- Views Demo Animation Section -->
-<section class="mmv" aria-label="Three ways to remember">
-  <div class="mmv__content">
+<section class="mmv pt-16 px-8 pb-24 max-w-[62rem] mx-auto" aria-label="Three ways to remember">
+  <div class="mmv__content flex flex-col items-center gap-10">
     <!-- Left: text + feature cards -->
     <div class="mmv__text">
-      <h2 class="mmv__heading">Three ways to remember</h2>
-      <p class="mmv__sub">Every contact saves when and where you met. Browse your network across time and space.</p>
+      <h2 class="mmv__heading text-[clamp(1.4rem,3vw,1.75rem)] font-bold text-stone-50 mb-3">Three ways to remember</h2>
+      <p class="mmv__sub text-[0.95rem] text-stone-400 leading-[1.55] mb-6">Every contact saves when and where you met. Browse your network across time and space.</p>
     </div>
 
     <!-- Right: phone demo -->
     <PhoneFrame>
       <!-- ===== TIMELINE VIEW ===== -->
-      <div class="mmv__gate" data-gate="timeline" style="display:none">
-        <div class="mmv__view mmv__view--timeline" data-view="timeline">
-          <div class="mmv__tl-scroll-wrap">
-            <div class="mmv__tl-scroll">
+      <div class="mmv__gate absolute inset-0" data-gate="timeline" style="display:none">
+        <div class="mmv__view mmv__view--timeline absolute inset-0 overflow-hidden pt-12 grid" data-view="timeline">
+          <div class="mmv__tl-scroll-wrap overflow-y-auto [scrollbar-width:none]">
+            <div class="mmv__tl-scroll pb-12">
               {
                 timelineGroups.map((group) => (
                   <>
-                    <div class="mmv__tl-header">{group.label}</div>
+                    <div class="mmv__tl-header text-[0.55rem] font-semibold uppercase tracking-[0.06em] text-stone-500 py-2 px-4 opacity-0 sticky top-0 z-[2] sm:text-[0.6rem]">{group.label}</div>
                     {group.contacts.map((name) => (
-                      <div class="mmv__tl-row">
-                        <span class="mmv__tl-avatar">{name[0]}</span>
-                        <span class="mmv__tl-name">{name}</span>
+                      <div class="mmv__tl-row flex items-center gap-[10px] py-2 px-4 opacity-0">
+                        <span class="mmv__tl-avatar w-[30px] h-[30px] rounded-full text-amber-400 grid place-content-center text-[0.65rem] font-bold shrink-0 sm:w-[34px] sm:h-[34px] sm:text-[0.7rem]">{name[0]}</span>
+                        <span class="mmv__tl-name text-[0.78rem] font-medium text-stone-200 sm:text-[0.85rem]">{name}</span>
                       </div>
                     ))}
                   </>
@@ -58,19 +58,19 @@ const timelineGroups = [
       </div>
 
       <!-- ===== CALENDAR VIEW ===== -->
-      <div class="mmv__gate" data-gate="calendar" style="display:none">
-        <div class="mmv__view mmv__view--calendar" data-view="calendar">
-          <div class="mmv__cal-scroll-wrap">
-            <div class="mmv__cal-scroll">
+      <div class="mmv__gate absolute inset-0" data-gate="calendar" style="display:none">
+        <div class="mmv__view mmv__view--calendar absolute inset-0 overflow-hidden pt-12 grid" data-view="calendar">
+          <div class="mmv__cal-scroll-wrap overflow-y-auto [scrollbar-width:none]">
+            <div class="mmv__cal-scroll pb-12">
               <!-- February 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">February 2026</p>
-                <div class="mmv__cal-weekdays">
+              <div class="mmv__cal-month mb-2">
+                <p class="mmv__cal-month-label sticky top-0 z-[2] text-[0.72rem] font-bold text-stone-300 pt-[10px] px-3 pb-[6px]">February 2026</p>
+                <div class="mmv__cal-weekdays grid grid-cols-7 text-center mb-[2px]">
                   <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
                     >Sat</span
                   >
                 </div>
-                <div class="mmv__cal-grid">
+                <div class="mmv__cal-grid grid grid-cols-7 text-center">
                   <!-- Feb 2026: starts on Sunday -->
                   <span class="mmv__cal-day">1</span>
                   <span class="mmv__cal-day">2</span>
@@ -103,14 +103,14 @@ const timelineGroups = [
                 </div>
               </div>
               <!-- March 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">March 2026</p>
-                <div class="mmv__cal-weekdays">
+              <div class="mmv__cal-month mb-2">
+                <p class="mmv__cal-month-label sticky top-0 z-[2] text-[0.72rem] font-bold text-stone-300 pt-[10px] px-3 pb-[6px]">March 2026</p>
+                <div class="mmv__cal-weekdays grid grid-cols-7 text-center mb-[2px]">
                   <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
                     >Sat</span
                   >
                 </div>
-                <div class="mmv__cal-grid">
+                <div class="mmv__cal-grid grid grid-cols-7 text-center">
                   <!-- March 2026: starts on Sunday -->
                   <span class="mmv__cal-day">1</span>
                   <span class="mmv__cal-day mmv__cal-day--event">2</span>
@@ -146,14 +146,14 @@ const timelineGroups = [
                 </div>
               </div>
               <!-- April 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">April 2026</p>
-                <div class="mmv__cal-weekdays">
+              <div class="mmv__cal-month mb-2">
+                <p class="mmv__cal-month-label sticky top-0 z-[2] text-[0.72rem] font-bold text-stone-300 pt-[10px] px-3 pb-[6px]">April 2026</p>
+                <div class="mmv__cal-weekdays grid grid-cols-7 text-center mb-[2px]">
                   <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
                     >Sat</span
                   >
                 </div>
-                <div class="mmv__cal-grid">
+                <div class="mmv__cal-grid grid grid-cols-7 text-center">
                   <!-- April 2026: starts on Wednesday -->
                   <span class="mmv__cal-day mmv__cal-day--empty"></span>
                   <span class="mmv__cal-day mmv__cal-day--empty"></span>
@@ -191,14 +191,14 @@ const timelineGroups = [
                 </div>
               </div>
               <!-- May 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">May 2026</p>
-                <div class="mmv__cal-weekdays">
+              <div class="mmv__cal-month mb-2">
+                <p class="mmv__cal-month-label sticky top-0 z-[2] text-[0.72rem] font-bold text-stone-300 pt-[10px] px-3 pb-[6px]">May 2026</p>
+                <div class="mmv__cal-weekdays grid grid-cols-7 text-center mb-[2px]">
                   <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
                     >Sat</span
                   >
                 </div>
-                <div class="mmv__cal-grid">
+                <div class="mmv__cal-grid grid grid-cols-7 text-center">
                   <!-- May 2026: starts on Friday -->
                   <span class="mmv__cal-day mmv__cal-day--empty"></span>
                   <span class="mmv__cal-day mmv__cal-day--empty"></span>
@@ -240,19 +240,19 @@ const timelineGroups = [
               </div>
             </div>
             <!-- Calendar popup -->
-            <div class="mmv__popup mmv__popup--cal">
-              <p class="mmv__popup-date">Monday, March 16, 2026</p>
-              <p class="mmv__popup-count">1 contact</p>
-              <div class="mmv__popup-contact">
-                <span class="mmv__tl-avatar">J</span>
-                <div class="mmv__popup-info">
-                  <span class="mmv__popup-name">Jane Smith</span>
-                  <span class="mmv__popup-detail">
-                    <span class="mmv__popup-dot mmv__popup-dot--met"></span>
+            <div class="mmv__popup mmv__popup--cal absolute bottom-0 left-0 right-0 opacity-0 z-[5] py-6 px-[18px] pb-16 sm:py-7 sm:px-[22px] sm:pb-[72px]">
+              <p class="mmv__popup-date text-[0.72rem] font-bold text-stone-100 mb-[2px] sm:text-[0.78rem]">Monday, March 16, 2026</p>
+              <p class="mmv__popup-count text-[0.6rem] text-stone-400 mb-[10px] sm:text-[0.65rem]">1 contact</p>
+              <div class="mmv__popup-contact flex gap-[10px] items-start">
+                <span class="mmv__tl-avatar w-[30px] h-[30px] rounded-full text-amber-400 grid place-content-center text-[0.65rem] font-bold shrink-0 sm:w-[34px] sm:h-[34px] sm:text-[0.7rem]">J</span>
+                <div class="mmv__popup-info flex flex-col gap-[2px]">
+                  <span class="mmv__popup-name text-[0.75rem] font-semibold text-stone-100 sm:text-[0.8rem]">Jane Smith</span>
+                  <span class="mmv__popup-detail text-[0.6rem] text-stone-400 flex items-center gap-[5px] sm:text-[0.65rem]">
+                    <span class="mmv__popup-dot mmv__popup-dot--met w-[5px] h-[5px] rounded-full shrink-0 bg-amber-500"></span>
                     Met contact date
                   </span>
-                  <span class="mmv__popup-detail">
-                    <span class="mmv__popup-dot mmv__popup-dot--bday"></span>
+                  <span class="mmv__popup-detail text-[0.6rem] text-stone-400 flex items-center gap-[5px] sm:text-[0.65rem]">
+                    <span class="mmv__popup-dot mmv__popup-dot--bday w-[5px] h-[5px] rounded-full shrink-0"></span>
                     Birthday (turns 33)
                   </span>
                 </div>
@@ -263,11 +263,11 @@ const timelineGroups = [
       </div>
 
       <!-- ===== MAP VIEW ===== -->
-      <div class="mmv__gate" data-gate="map" style="display:none">
-        <div class="mmv__view mmv__view--map" data-view="map">
-          <div class="mmv__map-container">
+      <div class="mmv__gate absolute inset-0" data-gate="map" style="display:none">
+        <div class="mmv__view mmv__view--map absolute inset-0 overflow-hidden" data-view="map">
+          <div class="mmv__map-container absolute will-change-transform" style="inset: -70px">
             <svg
-              class="mmv__map-svg"
+              class="mmv__map-svg w-full h-full"
               viewBox="0 0 800 550"
               preserveAspectRatio="xMidYMid slice"
               xmlns="http://www.w3.org/2000/svg"
@@ -350,48 +350,48 @@ const timelineGroups = [
             </svg>
 
             <!-- Map markers -->
-            <div class="mmv__map-marker" style="top: 18%; left: 30%;" data-name="Michele Mouton">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <div class="mmv__map-marker absolute w-[18px] h-6 opacity-0 will-change-transform sm:w-5 sm:h-[26px]" style="top: 18%; left: 30%;" data-name="Michele Mouton">
+              <svg class="w-full h-full" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
                 ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
                   d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
                   fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
                 ></circle></svg
               >
             </div>
-            <div class="mmv__map-marker" style="top: 32%; left: 55%;" data-name="Sarah Chen">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <div class="mmv__map-marker absolute w-[18px] h-6 opacity-0 will-change-transform sm:w-5 sm:h-[26px]" style="top: 32%; left: 55%;" data-name="Sarah Chen">
+              <svg class="w-full h-full" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
                 ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
                   d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
                   fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
                 ></circle></svg
               >
             </div>
-            <div class="mmv__map-marker" style="top: 45%; left: 38%;" data-name="Priya Sharma">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <div class="mmv__map-marker absolute w-[18px] h-6 opacity-0 will-change-transform sm:w-5 sm:h-[26px]" style="top: 45%; left: 38%;" data-name="Priya Sharma">
+              <svg class="w-full h-full" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
                 ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
                   d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
                   fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
                 ></circle></svg
               >
             </div>
-            <div class="mmv__map-marker mmv__map-marker--target" style="top: 55%; left: 48%;" data-name="Marcus Rivera">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <div class="mmv__map-marker mmv__map-marker--target absolute w-[18px] h-6 opacity-0 will-change-transform sm:w-5 sm:h-[26px]" style="top: 55%; left: 48%;" data-name="Marcus Rivera">
+              <svg class="w-full h-full" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
                 ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
                   d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
                   fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
                 ></circle></svg
               >
             </div>
-            <div class="mmv__map-marker" style="top: 28%; left: 70%;" data-name="Tina Park">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <div class="mmv__map-marker absolute w-[18px] h-6 opacity-0 will-change-transform sm:w-5 sm:h-[26px]" style="top: 28%; left: 70%;" data-name="Tina Park">
+              <svg class="w-full h-full" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
                 ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
                   d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
                   fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
                 ></circle></svg
               >
             </div>
-            <div class="mmv__map-marker" style="top: 65%; left: 25%;" data-name="Layla Okonkwo">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <div class="mmv__map-marker absolute w-[18px] h-6 opacity-0 will-change-transform sm:w-5 sm:h-[26px]" style="top: 65%; left: 25%;" data-name="Layla Okonkwo">
+              <svg class="w-full h-full" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
                 ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
                   d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
                   fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
@@ -400,14 +400,14 @@ const timelineGroups = [
             </div>
           </div>
           <!-- Map popup -->
-          <div class="mmv__popup mmv__popup--map">
-            <div class="mmv__popup-contact">
-              <span class="mmv__tl-avatar">M</span>
-              <div class="mmv__popup-info">
-                <span class="mmv__popup-name">Marcus Rivera</span>
-                <span class="mmv__popup-detail">Designer at Figma</span>
-                <span class="mmv__popup-location">
-                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+          <div class="mmv__popup mmv__popup--map absolute bottom-0 left-0 right-0 opacity-0 z-[5] py-6 px-[18px] rounded-b-[34px] pb-12 sm:py-7 sm:px-[22px] sm:rounded-b-[39px]">
+            <div class="mmv__popup-contact flex gap-[10px] items-start">
+              <span class="mmv__tl-avatar w-[30px] h-[30px] rounded-full text-amber-400 grid place-content-center text-[0.65rem] font-bold shrink-0 sm:w-[34px] sm:h-[34px] sm:text-[0.7rem]">M</span>
+              <div class="mmv__popup-info flex flex-col gap-[3px]">
+                <span class="mmv__popup-name text-[0.75rem] font-semibold text-stone-100 sm:text-[0.8rem]">Marcus Rivera</span>
+                <span class="mmv__popup-detail text-[0.6rem] text-stone-400 sm:text-[0.65rem]">Designer at Figma</span>
+                <span class="mmv__popup-location text-[0.6rem] text-stone-500 flex items-center gap-1 sm:text-[0.65rem]">
+                  <svg class="w-[10px] h-[10px] shrink-0 sm:w-3 sm:h-3" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
                     ><path d="M13 6.5c0 4.5-5 8-5 8s-5-3.5-5-8a5 5 0 0 1 10 0z" stroke="currentColor" stroke-width="1.2"
                     ></path><circle cx="8" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.2"></circle></svg
                   >
@@ -420,9 +420,9 @@ const timelineGroups = [
       </div>
 
       <!-- ===== TAB BAR ===== -->
-      <div class="mmv__tabbar">
-        <button class="mmv__tabbar-btn active" data-tab="timeline" aria-label="Timeline">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+      <div class="mmv__tabbar absolute bottom-0 left-0 right-0 flex justify-around items-center pt-2 pb-4 z-[6] sm:pt-[10px] sm:pb-5">
+        <button class="mmv__tabbar-btn bg-none border-none p-[6px] text-stone-500 cursor-pointer active" data-tab="timeline" aria-label="Timeline">
+          <svg class="w-[18px] h-[18px] sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
             ><path
               d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
               stroke="currentColor"
@@ -430,8 +430,8 @@ const timelineGroups = [
               stroke-linecap="round"></path></svg
           >
         </button>
-        <button class="mmv__tabbar-btn" data-tab="calendar" aria-label="Calendar">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        <button class="mmv__tabbar-btn bg-none border-none p-[6px] text-stone-500 cursor-pointer" data-tab="calendar" aria-label="Calendar">
+          <svg class="w-[18px] h-[18px] sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
             ><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"></rect><path
               d="M16 2v4M8 2v4M3 10h18"
               stroke="currentColor"
@@ -439,8 +439,8 @@ const timelineGroups = [
               stroke-linecap="round"></path></svg
           >
         </button>
-        <button class="mmv__tabbar-btn" data-tab="map" aria-label="Map">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        <button class="mmv__tabbar-btn bg-none border-none p-[6px] text-stone-500 cursor-pointer" data-tab="map" aria-label="Map">
+          <svg class="w-[18px] h-[18px] sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
             ><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5"
             ></path><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"></circle></svg
           >
@@ -450,20 +450,20 @@ const timelineGroups = [
 
     <!-- Feature explanation cards (below phone on mobile, left column on desktop) -->
     <div class="mmv__features">
-      <div class="mmv__features-track">
-        <div class="mmv__feature mmv__feature--active" data-view="timeline">
-          <span class="mmv__feature-title">Timeline</span>
-          <span class="mmv__feature-desc">Scroll through everyone you've met, organized by when you met them.</span>
+      <div class="mmv__features-track flex flex-col gap-3 max-md:flex-row max-md:gap-4">
+        <div class="mmv__feature mmv__feature--active rounded-[12px] border border-stone-700 bg-transparent py-[14px] px-[18px] max-md:flex-[0_0_75%] max-md:min-w-0" data-view="timeline">
+          <span class="mmv__feature-title block text-base font-bold text-stone-200 mb-1">Timeline</span>
+          <span class="mmv__feature-desc block text-[0.85rem] leading-[1.5] text-stone-500">Scroll through everyone you've met, organized by when you met them.</span>
         </div>
-        <div class="mmv__feature" data-view="calendar">
-          <span class="mmv__feature-title">Calendar</span>
-          <span class="mmv__feature-desc"
+        <div class="mmv__feature rounded-[12px] border border-stone-700 bg-transparent py-[14px] px-[18px] max-md:flex-[0_0_75%] max-md:min-w-0" data-view="calendar">
+          <span class="mmv__feature-title block text-base font-bold text-stone-200 mb-1">Calendar</span>
+          <span class="mmv__feature-desc block text-[0.85rem] leading-[1.5] text-stone-500"
             >See which days you met new people. Tap any date for details and birthdays.</span
           >
         </div>
-        <div class="mmv__feature" data-view="map">
-          <span class="mmv__feature-title">Map</span>
-          <span class="mmv__feature-desc">See where you've met people pinned on a map. Tap to recall the context.</span>
+        <div class="mmv__feature rounded-[12px] border border-stone-700 bg-transparent py-[14px] px-[18px] max-md:flex-[0_0_75%] max-md:min-w-0" data-view="map">
+          <span class="mmv__feature-title block text-base font-bold text-stone-200 mb-1">Map</span>
+          <span class="mmv__feature-desc block text-[0.85rem] leading-[1.5] text-stone-500">See where you've met people pinned on a map. Tap to recall the context.</span>
         </div>
       </div>
     </div>
@@ -741,19 +741,7 @@ const timelineGroups = [
 </script>
 
 <style>
-  /* ── Layout ── */
-  .mmv {
-    padding: 4rem 2rem 6rem;
-    max-width: 62rem;
-    margin: 0 auto;
-  }
-
   .mmv__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2.5rem;
-
     @media (width >= 48rem) {
       display: grid;
       grid-template-columns: minmax(0, 22rem) auto;
@@ -770,20 +758,6 @@ const timelineGroups = [
     }
   }
 
-  .mmv__heading {
-    font-size: clamp(1.4rem, 3vw, 1.75rem);
-    font-weight: 700;
-    color: var(--color-stone-50);
-    margin-bottom: 0.75rem;
-  }
-
-  .mmv__sub {
-    font-size: 0.95rem;
-    color: var(--color-stone-400);
-    line-height: 1.55;
-    margin-bottom: 1.5rem;
-  }
-
   .mmv__features {
     @media (width >= 48rem) {
       grid-column: 1;
@@ -795,34 +769,13 @@ const timelineGroups = [
       margin-left: -2rem;
       margin-right: -2rem;
       mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-      /* -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%); */
-    }
-  }
-
-  .mmv__features-track {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-
-    @media (width < 48rem) {
-      flex-direction: row;
-      gap: 1rem;
     }
   }
 
   .mmv__feature {
-    border-radius: 12px;
-    border: 1px solid var(--color-stone-700);
-    background: transparent;
-    padding: 14px 18px;
     transition:
       background 0.5s cubic-bezier(0.25, 1, 0.5, 1),
       border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-
-    @media (width < 48rem) {
-      flex: 0 0 75%;
-      min-width: 0;
-    }
   }
 
   .mmv__feature--active {
@@ -835,11 +788,6 @@ const timelineGroups = [
   }
 
   .mmv__feature-title {
-    display: block;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-stone-200);
-    margin-bottom: 0.25rem;
     transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 
     .mmv__feature--active & {
@@ -848,10 +796,6 @@ const timelineGroups = [
   }
 
   .mmv__feature-desc {
-    display: block;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--color-stone-500);
     transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 
     .mmv__feature--active & {
@@ -871,162 +815,51 @@ const timelineGroups = [
     }
   }
 
-  /* ── Views (overlapping, absolute) ── */
-  .mmv__gate {
-    position: absolute;
-    inset: 0;
-  }
-
-  .mmv__view {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-  }
-
-  /* ── Timeline ── */
-  .mmv__view--timeline {
-    padding-top: 48px;
-    display: grid;
-  }
-
-  .mmv__tl-scroll-wrap {
-    overflow-y: auto;
-    scrollbar-width: none;
-
+  .mmv__tl-scroll-wrap,
+  .mmv__cal-scroll-wrap {
     &::-webkit-scrollbar {
       display: none;
     }
   }
-  .mmv__tl-scroll {
-    padding-bottom: 48px;
-  }
 
   .mmv__tl-header {
-    font-size: 0.55rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-stone-500);
-    padding: 8px 16px;
-    opacity: 0;
-    position: sticky;
-    top: 0;
-    z-index: 2;
     background: var(--color-stone-900);
     background: linear-gradient(
       90deg,
       var(--color-stone-900) 40%,
       color-mix(in oklch, var(--color-stone-900) 0%, transparent) 100%
     );
-
-    @media (width >= 40rem) {
-      font-size: 0.6rem;
-    }
   }
 
   .mmv__tl-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    opacity: 0;
-
     & + & {
       border-top: 1px solid color-mix(in oklch, var(--color-stone-800) 40%, transparent);
     }
   }
 
   .mmv__tl-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
     background: color-mix(in oklch, var(--color-amber-500) 15%, transparent);
-    color: var(--color-amber-400);
-    display: grid;
-    place-content: center;
-    font-size: 0.65rem;
-    font-weight: 700;
-    flex-shrink: 0;
-
-    @media (width >= 40rem) {
-      width: 34px;
-      height: 34px;
-      font-size: 0.7rem;
-    }
-  }
-
-  .mmv__tl-name {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--color-stone-200);
-
-    @media (width >= 40rem) {
-      font-size: 0.85rem;
-    }
-  }
-
-  /* ── Calendar ── */
-  .mmv__view--calendar {
-    padding-top: 48px;
-    display: grid;
-  }
-
-  .mmv__cal-scroll-wrap {
-    overflow-y: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .mmv__cal-scroll {
-    padding-bottom: 48px;
-  }
-
-  .mmv__cal-month {
-    margin-bottom: 8px;
   }
 
   .mmv__cal-month-label {
-    position: sticky;
-    top: 0;
-    z-index: 2;
     background: var(--color-stone-900);
     background: linear-gradient(
       90deg,
       var(--color-stone-900) 40%,
       color-mix(in oklch, var(--color-stone-900) 0%, transparent) 100%
     );
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--color-stone-300);
-    padding: 10px 12px 6px;
   }
 
-  .mmv__cal-weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    margin-bottom: 2px;
+  .mmv__cal-weekdays span {
+    font-size: 0.48rem;
+    font-weight: 600;
+    color: var(--color-stone-500);
+    text-transform: uppercase;
+    padding: 2px 0;
 
-    span {
-      font-size: 0.48rem;
-      font-weight: 600;
-      color: var(--color-stone-500);
-      text-transform: uppercase;
-      padding: 2px 0;
-
-      @media (width >= 40rem) {
-        font-size: 0.52rem;
-      }
+    @media (width >= 40rem) {
+      font-size: 0.52rem;
     }
-  }
-
-  .mmv__cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
   }
 
   .mmv__cal-day {
@@ -1082,128 +915,12 @@ const timelineGroups = [
 
   /* ── Shared Popup ── */
   .mmv__popup {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     background: linear-gradient(180deg, oklch(20% 0.02 50 / 0) 0%, var(--color-stone-900) 20%);
-    padding: 24px 18px 64px;
-    opacity: 0;
     transform: translateY(100%);
-    z-index: 5;
-
-    @media (width >= 40rem) {
-      padding: 28px 22px 72px;
-    }
   }
 
-  .mmv__popup--map {
-    border-radius: 0 0 34px 34px;
-    padding-bottom: 48px;
-
-    @media (width >= 40rem) {
-      border-radius: 0 0 39px 39px;
-    }
-  }
-
-  .mmv__popup-contact {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .mmv__popup-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    .mmv__popup--map & {
-      gap: 3px;
-    }
-  }
-
-  .mmv__popup-name {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-stone-100);
-
-    @media (width >= 40rem) {
-      font-size: 0.8rem;
-    }
-  }
-
-  .mmv__popup-detail {
-    font-size: 0.6rem;
-    color: var(--color-stone-400);
-
-    @media (width >= 40rem) {
-      font-size: 0.65rem;
-    }
-
-    .mmv__popup--cal & {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-  }
-
-  .mmv__popup-date {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--color-stone-100);
-    margin-bottom: 2px;
-
-    @media (width >= 40rem) {
-      font-size: 0.78rem;
-    }
-  }
-
-  .mmv__popup-count {
-    font-size: 0.6rem;
-    color: var(--color-stone-400);
-    margin-bottom: 10px;
-
-    @media (width >= 40rem) {
-      font-size: 0.65rem;
-    }
-  }
-
-  .mmv__popup-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-
-    &--met {
-      background: var(--color-amber-500);
-    }
-
-    &--bday {
-      background: oklch(65% 0.2 15);
-    }
-  }
-
-  .mmv__popup-location {
-    font-size: 0.6rem;
-    color: var(--color-stone-500);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-
-    svg {
-      width: 10px;
-      height: 10px;
-      flex-shrink: 0;
-    }
-
-    @media (width >= 40rem) {
-      font-size: 0.65rem;
-
-      svg {
-        width: 12px;
-        height: 12px;
-      }
-    }
+  .mmv__popup-dot--bday {
+    background: oklch(65% 0.2 15);
   }
 
   /* ── Map ── */
@@ -1211,34 +928,8 @@ const timelineGroups = [
     background: oklch(18% 0.006 50);
   }
 
-  .mmv__map-container {
-    position: absolute;
-    inset: -70px;
-    will-change: transform;
-  }
-
-  .mmv__map-svg {
-    width: 100%;
-    height: 100%;
-  }
-
   .mmv__map-marker {
-    position: absolute;
-    width: 18px;
-    height: 24px;
-    opacity: 0;
-    will-change: transform;
     filter: drop-shadow(0 2px 4px oklch(0% 0 0 / 0.4));
-
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    @media (width >= 40rem) {
-      width: 20px;
-      height: 26px;
-    }
   }
 
   .mmv__map-marker--pulse {
@@ -1261,41 +952,12 @@ const timelineGroups = [
     }
   }
 
-  /* ── Tab Bar ── */
   .mmv__tabbar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 0 16px;
     background: linear-gradient(transparent, var(--color-stone-950) 100%);
-    z-index: 6;
-
-    @media (width >= 40rem) {
-      padding: 10px 0 20px;
-    }
   }
 
   .mmv__tabbar-btn {
-    background: none;
-    border: none;
-    padding: 6px;
-    color: var(--color-stone-500);
-    cursor: pointer;
     transition: color 0.3s ease;
-
-    svg {
-      width: 18px;
-      height: 18px;
-
-      @media (width >= 40rem) {
-        width: 20px;
-        height: 20px;
-      }
-    }
 
     &.active {
       color: var(--color-amber-400);

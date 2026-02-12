@@ -3,53 +3,53 @@ import PhoneFrame from '@components/PhoneFrame.astro'
 ---
 
 <!-- Demo Animation Section -->
-<section class="mm-demo" aria-label="How MetMe works">
+<section class="mm-demo flex flex-col items-center pt-16 px-8 pb-24" aria-label="How MetMe works">
   <PhoneFrame>
-    <div class="mm-demo__prompt-container">
+    <div class="mm-demo__prompt-container px-[22px] sm:px-[26px]">
       <!-- Step 1: Prompt -->
-      <p class="mm-demo__prompt">Who did you meet?</p>
+      <p class="mm-demo__prompt text-[1.15rem] font-semibold text-amber-500 opacity-0 self-start sm:text-[1.3rem]">Who did you meet?</p>
 
       <!-- Step 2: Text appears -->
-      <div class="mm-demo__text">
-        <span class="mm-demo__word">I</span>{' '}
-        <span class="mm-demo__word">met</span>{' '}
-        <span class="mm-demo__word" data-field="name">Michele Mouton</span>{' '}
-        <span class="mm-demo__word">a</span>{' '}
-        <span class="mm-demo__word" data-field="title">driver</span>{' '}
-        <span class="mm-demo__word">at</span>{' '}
-        <span class="mm-demo__word" data-field="company">Group B Rally</span>{' '}
-        <span class="mm-demo__word" data-field="phone">415-555-9876</span>{' '}
-        <span class="mm-demo__word" data-field="email">michele@mouton.com</span>
+      <div class="mm-demo__text hidden text-[1.1rem] font-semibold text-amber-400 leading-[1.5] self-start relative sm:text-[1.2rem]">
+        <span class="mm-demo__word inline opacity-0">I</span>{' '}
+        <span class="mm-demo__word inline opacity-0">met</span>{' '}
+        <span class="mm-demo__word inline opacity-0" data-field="name">Michele Mouton</span>{' '}
+        <span class="mm-demo__word inline opacity-0">a</span>{' '}
+        <span class="mm-demo__word inline opacity-0" data-field="title">driver</span>{' '}
+        <span class="mm-demo__word inline opacity-0">at</span>{' '}
+        <span class="mm-demo__word inline opacity-0" data-field="company">Group B Rally</span>{' '}
+        <span class="mm-demo__word inline opacity-0" data-field="phone">415-555-9876</span>{' '}
+        <span class="mm-demo__word inline opacity-0" data-field="email">michele@mouton.com</span>
       </div>
     </div>
 
     <!-- Step 3: Parsed contact card -->
-    <div class="mm-demo__contact">
-      <div class="mm-demo__contact-row">
-        <span class="mm-demo__contact-label">Name</span>
-        <span class="mm-demo__contact-value">Michele Mouton</span>
+    <div class="mm-demo__contact hidden w-full mt-auto mb-[104px]">
+      <div class="mm-demo__contact-row flex justify-start items-baseline gap-3 py-2 px-6 opacity-0">
+        <span class="mm-demo__contact-label text-[0.65rem] w-[60px] text-stone-500 uppercase tracking-[0.04em] sm:w-[70px] sm:text-[0.7rem]">Name</span>
+        <span class="mm-demo__contact-value text-[0.85rem] font-medium text-stone-100 sm:text-[0.9rem]">Michele Mouton</span>
       </div>
-      <div class="mm-demo__contact-row">
-        <span class="mm-demo__contact-label">Company</span>
-        <span class="mm-demo__contact-value">Group B Rally</span>
+      <div class="mm-demo__contact-row flex justify-start items-baseline gap-3 py-2 px-6 opacity-0">
+        <span class="mm-demo__contact-label text-[0.65rem] w-[60px] text-stone-500 uppercase tracking-[0.04em] sm:w-[70px] sm:text-[0.7rem]">Company</span>
+        <span class="mm-demo__contact-value text-[0.85rem] font-medium text-stone-100 sm:text-[0.9rem]">Group B Rally</span>
       </div>
-      <div class="mm-demo__contact-row">
-        <span class="mm-demo__contact-label">Title</span>
-        <span class="mm-demo__contact-value">Driver</span>
+      <div class="mm-demo__contact-row flex justify-start items-baseline gap-3 py-2 px-6 opacity-0">
+        <span class="mm-demo__contact-label text-[0.65rem] w-[60px] text-stone-500 uppercase tracking-[0.04em] sm:w-[70px] sm:text-[0.7rem]">Title</span>
+        <span class="mm-demo__contact-value text-[0.85rem] font-medium text-stone-100 sm:text-[0.9rem]">Driver</span>
       </div>
-      <div class="mm-demo__contact-row">
-        <span class="mm-demo__contact-label">Phone</span>
-        <span class="mm-demo__contact-value">415-555-9876</span>
+      <div class="mm-demo__contact-row flex justify-start items-baseline gap-3 py-2 px-6 opacity-0">
+        <span class="mm-demo__contact-label text-[0.65rem] w-[60px] text-stone-500 uppercase tracking-[0.04em] sm:w-[70px] sm:text-[0.7rem]">Phone</span>
+        <span class="mm-demo__contact-value text-[0.85rem] font-medium text-stone-100 sm:text-[0.9rem]">415-555-9876</span>
       </div>
-      <div class="mm-demo__contact-row">
-        <span class="mm-demo__contact-label">Email</span>
-        <span class="mm-demo__contact-value">michele@mouton.com</span>
+      <div class="mm-demo__contact-row flex justify-start items-baseline gap-3 py-2 px-6 opacity-0">
+        <span class="mm-demo__contact-label text-[0.65rem] w-[60px] text-stone-500 uppercase tracking-[0.04em] sm:w-[70px] sm:text-[0.7rem]">Email</span>
+        <span class="mm-demo__contact-value text-[0.85rem] font-medium text-stone-100 sm:text-[0.9rem]">michele@mouton.com</span>
       </div>
     </div>
 
     <!-- Delete button -->
-    <div class="mm-demo__delete">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="mm-demo__delete absolute rounded-full grid place-content-center opacity-0 sm:bottom-8 sm:w-[44px] sm:h-[44px]">
+      <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14"
           stroke="currentColor"
@@ -60,8 +60,8 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     </div>
 
     <!-- Save button -->
-    <div class="mm-demo__save">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="mm-demo__save absolute rounded-full grid place-content-center opacity-0 sm:bottom-8 sm:w-[44px] sm:h-[44px]">
+      <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M20 6L9 17l-5-5"
           stroke="currentColor"
@@ -72,11 +72,11 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     </div>
 
     <!-- Context pill and mic button container -->
-    <div class="mm-demo__input-container">
+    <div class="mm-demo__input-container grid gap-3 justify-items-center absolute left-1/2 bottom-6 -translate-x-1/2 sm:bottom-7">
       <!-- Context pill -->
-      <div class="mm-demo__context-pill">
-        <span class="mm-demo__context-item">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+      <div class="mm-demo__context-pill flex gap-0 bg-stone-800 border border-stone-600 rounded-[20px] whitespace-nowrap">
+        <span class="mm-demo__context-item flex items-center gap-[6px] text-[11px] font-medium text-stone-400 tracking-[0.01em] py-[3px] px-[7px] sm:text-[12px] sm:py-1 sm:px-2">
+          <svg class="w-3 h-3 shrink-0 sm:w-[14px] sm:h-[14px]" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
             ><rect x="1" y="3" width="14" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"></rect><path
               d="M1 6.5h14M5 1v4M11 1v4"
               stroke="currentColor"
@@ -85,9 +85,9 @@ import PhoneFrame from '@components/PhoneFrame.astro'
           >
           Today
         </span>
-        <span class="mm-demo__context-divider"></span>
-        <span class="mm-demo__context-item">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+        <span class="mm-demo__context-divider w-[0.5px] border-dashed border border-stone-700"></span>
+        <span class="mm-demo__context-item flex items-center gap-[6px] text-[11px] font-medium text-stone-400 tracking-[0.01em] py-[3px] px-[7px] sm:text-[12px] sm:py-1 sm:px-2">
+          <svg class="w-3 h-3 shrink-0 sm:w-[14px] sm:h-[14px]" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
             ><path d="M13 6.5c0 4.5-5 8-5 8s-5-3.5-5-8a5 5 0 0 1 10 0z" stroke="currentColor" stroke-width="1.2"
             ></path><circle cx="8" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.2"></circle></svg
           >
@@ -96,8 +96,8 @@ import PhoneFrame from '@components/PhoneFrame.astro'
       </div>
 
       <!-- Mic button -->
-      <div class="mm-demo__mic">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="mm-demo__mic w-12 h-12 bg-stone-800 border border-stone-600 rounded-full grid place-content-center text-stone-300 sm:w-14 sm:h-14">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"></path>
           <path
             d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4m-4 0h8"
@@ -110,9 +110,9 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     </div>
 
     <!-- Saved confirmation popup -->
-    <div class="mm-demo__saved">
-      <div class="mm-demo__saved-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="mm-demo__saved absolute bottom-0 left-0 right-0 flex flex-col items-center opacity-0 sm:rounded-b-[39px] sm:py-9 sm:px-7">
+      <div class="mm-demo__saved-icon w-9 h-9 rounded-full grid place-content-center text-stone-50 mb-3">
+        <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M20 6L9 17l-5-5"
             stroke="currentColor"
@@ -121,10 +121,10 @@ import PhoneFrame from '@components/PhoneFrame.astro'
             stroke-linejoin="round"></path>
         </svg>
       </div>
-      <p class="mm-demo__saved-name">Michele Mouton saved</p>
-      <p class="mm-demo__saved-detail">Driver at Group B Rally</p>
-      <p class="mm-demo__saved-detail">415-555-9876</p>
-      <span class="mm-demo__saved-view">View contact</span>
+      <p class="mm-demo__saved-name text-[0.95rem] font-semibold text-stone-50 mb-1">Michele Mouton saved</p>
+      <p class="mm-demo__saved-detail text-[0.78rem] leading-[1.4]">Driver at Group B Rally</p>
+      <p class="mm-demo__saved-detail text-[0.78rem] leading-[1.4]">415-555-9876</p>
+      <span class="mm-demo__saved-view mt-[14px] text-[0.78rem] font-medium text-stone-50 rounded-2xl py-[5px] px-4">View contact</span>
     </div>
   </PhoneFrame>
 </section>
@@ -359,14 +359,6 @@ import PhoneFrame from '@components/PhoneFrame.astro'
 </script>
 
 <style>
-  /* ── Demo Animation Section ── */
-  .mm-demo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4rem 2rem 6rem;
-  }
-
   .mm-demo :global(.phone-frame__screen) {
     display: flex;
     flex-direction: column;
@@ -378,43 +370,7 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     }
   }
 
-  .mm-demo__prompt-container {
-    padding: 0 22px;
-
-    @media (width >= 40rem) {
-      padding: 0 26px;
-    }
-  }
-
-  .mm-demo__prompt {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-amber-500);
-    opacity: 0;
-    align-self: flex-start;
-
-    @media (width >= 40rem) {
-      font-size: 1.3rem;
-    }
-  }
-
-  .mm-demo__text {
-    display: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-amber-400);
-    line-height: 1.5;
-    align-self: flex-start;
-    position: relative;
-
-    @media (width >= 40rem) {
-      font-size: 1.2rem;
-    }
-  }
-
   .mm-demo__word {
-    display: inline;
-    opacity: 0;
     transition:
       color 0.4s ease,
       text-shadow 0.4s ease;
@@ -451,67 +407,15 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     }
   }
 
-  .mm-demo__contact {
-    display: none;
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: 104px;
-  }
-
   .mm-demo__contact-row {
-    display: flex;
-    justify-content: start;
-    align-items: baseline;
-    gap: 12px;
-    padding: 8px 24px;
     border-bottom: 1px dashed color-mix(in oklch, var(--color-stone-800) 50%, transparent);
-    opacity: 0;
-  }
-
-  .mm-demo__contact-label {
-    font-size: 0.65rem;
-    width: 60px;
-    color: var(--color-stone-500);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-
-    @media (width >= 40rem) {
-      width: 70px;
-      font-size: 0.7rem;
-    }
-  }
-
-  .mm-demo__contact-value {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-stone-100);
-
-    @media (width >= 40rem) {
-      font-size: 0.9rem;
-    }
   }
 
   .mm-demo__delete,
   .mm-demo__save {
-    position: absolute;
     bottom: 28px;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    display: grid;
-    place-content: center;
-    opacity: 0;
-
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    @media (width >= 40rem) {
-      bottom: 32px;
-      width: 44px;
-      height: 44px;
-    }
   }
 
   .mm-demo__delete {
@@ -537,142 +441,21 @@ import PhoneFrame from '@components/PhoneFrame.astro'
   }
 
   .mm-demo__saved {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 32px 24px 28px;
     background: linear-gradient(180deg, oklch(20% 0.04 160 / 0) 0%, oklch(25% 0.06 160) 30%, oklch(28% 0.07 155) 100%);
     border-radius: 0 0 34px 34px;
-    opacity: 0;
-
-    @media (width >= 40rem) {
-      border-radius: 0 0 39px 39px;
-      padding: 36px 28px 32px;
-    }
   }
 
   .mm-demo__saved-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
     background: oklch(55% 0.12 160);
-    display: grid;
-    place-content: center;
-    color: var(--color-stone-50);
-    margin-bottom: 12px;
-
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-  }
-
-  .mm-demo__saved-name {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--color-stone-50);
-    margin-bottom: 4px;
   }
 
   .mm-demo__saved-detail {
-    font-size: 0.78rem;
     color: oklch(70% 0.03 160);
-    line-height: 1.4;
   }
 
   .mm-demo__saved-view {
-    margin-top: 14px;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--color-stone-50);
     border: 1px solid oklch(70% 0.05 160 / 0.4);
-    border-radius: 16px;
-    padding: 5px 16px;
-  }
-
-  .mm-demo__input-container {
-    display: grid;
-    gap: 12px;
-    justify-items: center;
-    position: absolute;
-    left: 50%;
-    bottom: 24px;
-    transform: translateX(-50%);
-
-    @media (width >= 40rem) {
-      bottom: 28px;
-    }
-  }
-
-  .mm-demo__context-pill {
-    display: flex;
-    gap: 0;
-    background: var(--color-stone-800);
-    border: 1px solid var(--color-stone-600);
-    border-radius: 20px;
-    white-space: nowrap;
-    @media (width >= 40rem) {
-      bottom: 94px;
-    }
-  }
-
-  .mm-demo__context-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--color-stone-400);
-    letter-spacing: 0.01em;
-    padding: 3px 7px;
-
-    svg {
-      width: 12px;
-      height: 12px;
-      flex-shrink: 0;
-    }
-
-    @media (width >= 40rem) {
-      font-size: 12px;
-      padding: 4px 8px;
-
-      svg {
-        width: 14px;
-        height: 14px;
-      }
-    }
-  }
-
-  .mm-demo__context-divider {
-    width: 0.5px;
-    border-style: dashed;
-    border-width: 1px;
-    border-color: var(--color-stone-700);
-  }
-
-  .mm-demo__mic {
-    width: 48px;
-    height: 48px;
-    background: var(--color-stone-800);
-    border: 1px solid var(--color-stone-600);
-    border-radius: 50%;
-    display: grid;
-    place-content: center;
-    color: var(--color-stone-300);
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    @media (width >= 40rem) {
-      width: 56px;
-      height: 56px;
-    }
   }
 
   .mm-demo__mic--active {
