@@ -35,7 +35,6 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
         data-visitors-event="Join Testflight"
         data-visitors-source="Hero"
       >
-        <span class="mm-cta-btn__fill"></span>
         <span class="mm-cta-btn__label">Join the Beta on TestFlight</span>
       </a>
       <div class="mm-requirements__wrap">
@@ -163,11 +162,10 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
         <p class="mm-bottom-cta__desc">Coming to the App Store soon!</p>
         <a
           href="https://testflight.apple.com/join/EQErxJEX"
-          class="mm-cta-btn mm-cta-btn--lg mm-cta-btn--white"
+          class="mm-cta-btn"
           data-visitors-event="Join Testflight"
           data-visitors-source="Hero"
         >
-          <span class="mm-cta-btn__fill"></span>
           <span class="mm-cta-btn__label">Get MetMe on TestFlight</span>
         </a>
         <div class="mm-requirements__wrap">
@@ -274,18 +272,37 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
     vertical-align: text-top;
   }
 
-  /* ── CTA Button (MetMe style gradient) ── */
+  /* ── CTA Button ── */
+  @property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 135deg;
+    inherits: true;
+  }
+
   .mm-cta-btn {
+    --button-height: 56px;
+    --button-radius: calc(var(--button-height) / 2);
+    --border-size: 2px;
+    --gradient-angle: 0deg;
     position: relative;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    border-radius: 12px;
+    height: var(--button-height);
+    border-radius: var(--button-radius);
     padding: 14px 28px;
     cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+    background: conic-gradient(
+      from var(--gradient-angle),
+      var(--color-amber-700) 0deg,
+      var(--color-amber-600) 140deg,
+      var(--color-amber-500) 180deg,
+      var(--color-amber-600) 220deg,
+      var(--color-amber-700) 360deg
+    );
+    transition:
+      /* --gradient-angle 0.3s ease-out, */ transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
 
     &:active {
       transform: scale(1.05);
@@ -294,59 +311,26 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
     &::before {
       content: '';
       position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      padding: 1px;
-      background: linear-gradient(
-        135deg,
-        color-mix(in oklch, var(--color-amber-200) 87%, transparent),
-        color-mix(in oklch, var(--color-amber-300) 60%, transparent),
-        color-mix(in oklch, var(--color-amber-400) 27%, transparent),
-        color-mix(in oklch, var(--color-amber-500) 20%, transparent)
+      inset: calc(-1 * var(--border-size));
+      border-radius: calc(var(--button-radius) + var(--border-size));
+      background: conic-gradient(
+        from var(--gradient-angle),
+        color-mix(in oklch, var(--color-amber-200) 20%, transparent) 0deg,
+        color-mix(in oklch, var(--color-amber-400) 60%, transparent) 160deg,
+        var(--color-amber-100) 180deg,
+        color-mix(in oklch, var(--color-amber-400) 60%, transparent) 200deg,
+        color-mix(in oklch, var(--color-amber-200) 20%, transparent) 360deg
       );
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
+      z-index: -1;
       pointer-events: none;
     }
   }
 
-  .mm-cta-btn__fill {
-    position: absolute;
-    inset: 1px;
-    border-radius: 11px;
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, var(--color-amber-500) 85%, transparent),
-      color-mix(in oklch, var(--color-amber-600) 60%, transparent)
-    );
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    transition: background-position 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    pointer-events: none;
-
-    .mm-cta-btn:hover & {
-      background-position: 100% 50%;
-    }
-  }
-
   .mm-cta-btn__label {
-    position: relative;
     font-family: 'Nunito Sans', system-ui, sans-serif;
     font-weight: 600;
     font-size: 1.05rem;
     color: #fff;
-    z-index: 1;
-  }
-
-  .mm-cta-btn--lg {
-    padding: 16px 36px;
-
-    .mm-cta-btn__label {
-      font-size: 1.15rem;
-    }
   }
 
   .mm-requirements__wrap {
@@ -435,16 +419,30 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
   }
 
   .mm-bottom-cta__icon {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     margin-bottom: 1.25rem;
-    filter: drop-shadow(0 4px 20px color-mix(in oklch, var(--color-amber-500) 30%, transparent));
+    will-change: transform;
+    filter: drop-shadow(0 6px 30px color-mix(in oklch, var(--color-amber-500) 35%, transparent));
+    transition:
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      filter 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
+    @media (width >= 40rem) {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .mm-bottom-cta:has(.mm-cta-btn:hover) .mm-bottom-cta__icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 10px 45px color-mix(in oklch, var(--color-amber-500) 60%, transparent));
   }
 
   .mm-bottom-cta__title {
@@ -458,28 +456,6 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
     font-size: 0.9rem;
     color: var(--color-amber-400);
     margin-bottom: 1.75rem;
-  }
-
-  /* ── White glass CTA button variant ── */
-  .mm-cta-btn--white {
-    &::before {
-      background: linear-gradient(
-        135deg,
-        color-mix(in oklch, #fff 50%, transparent),
-        color-mix(in oklch, #fff 20%, transparent),
-        color-mix(in oklch, #fff 8%, transparent)
-      );
-    }
-
-    .mm-cta-btn__fill {
-      background: linear-gradient(
-        135deg,
-        color-mix(in oklch, #fff 18%, transparent),
-        color-mix(in oklch, #fff 6%, transparent)
-      );
-      background-size: 200% 200%;
-      background-position: 0% 50%;
-    }
   }
 
   /* ── Footer ── */
@@ -512,3 +488,25 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
     }
   }
 </style>
+
+<script>
+  const buttons = document.querySelectorAll('.mm-cta-btn')
+  const angles = new Map<Element, number>()
+
+  document.addEventListener('mousemove', (e) => {
+    buttons.forEach((btn) => {
+      const rect = btn.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      const target = Math.atan2(e.clientY - cy, e.clientX - cx) * (180 / Math.PI) - 90
+
+      let current = angles.get(btn) ?? target
+      let diff = target - current
+      // Shortest-path wrap so the transition never jumps the long way around
+      diff = (((diff % 360) + 540) % 360) - 180
+      current += diff
+      angles.set(btn, current)
+      ;(btn as HTMLElement).style.setProperty('--gradient-angle', `${current}deg`)
+    })
+  })
+</script>
