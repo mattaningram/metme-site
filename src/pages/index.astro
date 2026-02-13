@@ -301,8 +301,8 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
       var(--color-amber-600) 220deg,
       var(--color-amber-700) 360deg
     );
-    transition:
-      /* --gradient-angle 0.3s ease-out, */ transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
 
     &:active {
       transform: scale(1.05);
@@ -493,7 +493,7 @@ import metmeIcon from '@media/metme/metme-ios-icon.png'
   const buttons = document.querySelectorAll('.mm-cta-btn')
   const angles = new Map<Element, number>()
 
-  document.addEventListener('mousemove', (e) => {
+  document.addEventListener('pointermove', (e) => {
     buttons.forEach((btn) => {
       const rect = btn.getBoundingClientRect()
       const cx = rect.left + rect.width / 2
