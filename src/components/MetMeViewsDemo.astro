@@ -127,7 +127,7 @@ const timelineGroups = [
                   <span class="mmv__cal-day">13</span>
                   <span class="mmv__cal-day" data-event>14</span>
                   <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day" data-event>16</span>
+                  <span class="mmv__cal-day" data-event data-selected>16</span>
                   <span class="mmv__cal-day">17</span>
                   <span class="mmv__cal-day">18</span>
                   <span class="mmv__cal-day">19</span>
@@ -175,7 +175,7 @@ const timelineGroups = [
                   <span class="mmv__cal-day">15</span>
                   <span class="mmv__cal-day">16</span>
                   <span class="mmv__cal-day">17</span>
-                  <span class="mmv__cal-day" data-event data-selected>18</span>
+                  <span class="mmv__cal-day" data-event>18</span>
                   <span class="mmv__cal-day">19</span>
                   <span class="mmv__cal-day">20</span>
                   <span class="mmv__cal-day">21</span>
@@ -536,12 +536,11 @@ const timelineGroups = [
       if (cloneCard) {
         const containerWidth = container.offsetWidth
         const cloneX = -(cloneCard.offsetLeft - (containerWidth - cloneCard.offsetWidth) / 2)
-        animate(track, { x: cloneX } as any, { duration: 0.5, easing: [...EASE] } as any)
-          .finished.then(() => {
-            const realCard = cards[0] as HTMLElement
-            const realX = -(realCard.offsetLeft - (containerWidth - realCard.offsetWidth) / 2)
-            animate(track, { x: realX } as any, { duration: 0 } as any)
-          })
+        animate(track, { x: cloneX } as any, { duration: 0.5, easing: [...EASE] } as any).finished.then(() => {
+          const realCard = cards[0] as HTMLElement
+          const realX = -(realCard.offsetLeft - (containerWidth - realCard.offsetWidth) / 2)
+          animate(track, { x: realX } as any, { duration: 0 } as any)
+        })
         return
       }
     }
@@ -669,22 +668,24 @@ const timelineGroups = [
       // ===== CALENDAR =====
       setActiveView('calendar')
 
-      // Reset calendar state before showing
-      calScroll.scrollTop = 0
+      // Reset calendar state before showing (gate must be visible for scrollTop to work)
+      calView.style.opacity = '0'
       calSelectDay?.removeAttribute('data-selected-active')
       calPopup.style.opacity = '0'
       calPopup.style.transform = 'translateY(100%)'
-
-      // Show calendar
       showGate('calendar')
+      const calScrollStart = 400
+      calScroll.scrollTop = calScrollStart
+
+      // Fade in calendar (already at scroll position)
       await animate(calView, { opacity: [0, 1] } as any, { duration: 0.4, easing: [...EASE] } as any).finished
       if (signal.aborted) return
 
       await delay(600, signal)
 
-      // Scroll to reveal March using scrollTop
-      const calScrollTarget = 400
-      await animate(0, calScrollTarget, {
+      // Scroll up smoothly
+      const calScrollEnd = 0
+      await animate(calScrollStart, calScrollEnd, {
         duration: 1.8,
         easing: [0.4, 0, 0.2, 1] as any,
         onUpdate: (v: number) => {
@@ -862,6 +863,12 @@ const timelineGroups = [
     @media (width < 48rem) {
       flex: 0 0 75%;
       min-width: 0;
+    }
+  }
+
+  .mmv__feature--clone {
+    @media (width >= 48rem) {
+      display: none;
     }
   }
 
@@ -1114,16 +1121,16 @@ const timelineGroups = [
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: oklch(50% 0.15 260);
     z-index: -1;
 
     @media (width >= 40rem) {
       .mmv__cal-day[data-selected-active]::before {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
       }
     }
   }
