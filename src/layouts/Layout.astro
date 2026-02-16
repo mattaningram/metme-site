@@ -28,6 +28,12 @@ import '@styles/global.css'
     <title>{title}</title>
     <meta name="description" content={description} />
 
+    {
+      import.meta.env.MODE === 'production' && (
+        <script src="https://cdn.visitors.now/v.js" data-token="426ec9b0-f6e1-472f-8bb4-42d7818ea02d" defer />
+      )
+    }
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -50,12 +56,6 @@ import '@styles/global.css'
     />
 
     <meta name="generator" content={Astro.generator} />
-
-    {
-      import.meta.env.MODE === 'production' && (
-        <script src="https://cdn.visitors.now/v.js" data-token="426ec9b0-f6e1-472f-8bb4-42d7818ea02d" />
-      )
-    }
 
     <slot name="head" />
 
