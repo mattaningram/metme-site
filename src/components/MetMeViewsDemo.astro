@@ -74,7 +74,7 @@ const timelineGroups = [
                   <!-- Feb 2026: starts on Sunday -->
                   <span class="mmv__cal-day">1</span>
                   <span class="mmv__cal-day">2</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">3</span>
+                  <span class="mmv__cal-day" data-event>3</span>
                   <span class="mmv__cal-day">4</span>
                   <span class="mmv__cal-day">5</span>
                   <span class="mmv__cal-day">6</span>
@@ -85,11 +85,11 @@ const timelineGroups = [
                   <span class="mmv__cal-day">11</span>
                   <span class="mmv__cal-day">12</span>
                   <span class="mmv__cal-day">13</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">14</span>
+                  <span class="mmv__cal-day" data-event>14</span>
                   <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">16</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">17</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">18</span>
+                  <span class="mmv__cal-day" data-event>16</span>
+                  <span class="mmv__cal-day" data-event>17</span>
+                  <span class="mmv__cal-day" data-event>18</span>
                   <span class="mmv__cal-day">19</span>
                   <span class="mmv__cal-day">20</span>
                   <span class="mmv__cal-day">21</span>
@@ -113,10 +113,10 @@ const timelineGroups = [
                 <div class="mmv__cal-grid">
                   <!-- March 2026: starts on Sunday -->
                   <span class="mmv__cal-day">1</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">2</span>
+                  <span class="mmv__cal-day" data-event>2</span>
                   <span class="mmv__cal-day">3</span>
                   <span class="mmv__cal-day">4</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">5</span>
+                  <span class="mmv__cal-day" data-event>5</span>
                   <span class="mmv__cal-day">6</span>
                   <span class="mmv__cal-day">7</span>
                   <span class="mmv__cal-day">8</span>
@@ -125,9 +125,9 @@ const timelineGroups = [
                   <span class="mmv__cal-day">11</span>
                   <span class="mmv__cal-day">12</span>
                   <span class="mmv__cal-day">13</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">14</span>
+                  <span class="mmv__cal-day" data-event>14</span>
                   <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day mmv__cal-day--event" data-select="true">16</span>
+                  <span class="mmv__cal-day" data-event>16</span>
                   <span class="mmv__cal-day">17</span>
                   <span class="mmv__cal-day">18</span>
                   <span class="mmv__cal-day">19</span>
@@ -155,18 +155,18 @@ const timelineGroups = [
                 </div>
                 <div class="mmv__cal-grid">
                   <!-- April 2026: starts on Wednesday -->
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
+                  <span class="mmv__cal-day" data-empty></span>
+                  <span class="mmv__cal-day" data-empty></span>
+                  <span class="mmv__cal-day" data-empty></span>
                   <span class="mmv__cal-day">1</span>
                   <span class="mmv__cal-day">2</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">3</span>
+                  <span class="mmv__cal-day" data-event>3</span>
                   <span class="mmv__cal-day">4</span>
                   <span class="mmv__cal-day">5</span>
                   <span class="mmv__cal-day">6</span>
                   <span class="mmv__cal-day">7</span>
                   <span class="mmv__cal-day">8</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">9</span>
+                  <span class="mmv__cal-day" data-event>9</span>
                   <span class="mmv__cal-day">10</span>
                   <span class="mmv__cal-day">11</span>
                   <span class="mmv__cal-day">12</span>
@@ -175,11 +175,11 @@ const timelineGroups = [
                   <span class="mmv__cal-day">15</span>
                   <span class="mmv__cal-day">16</span>
                   <span class="mmv__cal-day">17</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">18</span>
+                  <span class="mmv__cal-day" data-event data-selected>18</span>
                   <span class="mmv__cal-day">19</span>
                   <span class="mmv__cal-day">20</span>
                   <span class="mmv__cal-day">21</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">22</span>
+                  <span class="mmv__cal-day" data-event>22</span>
                   <span class="mmv__cal-day">23</span>
                   <span class="mmv__cal-day">24</span>
                   <span class="mmv__cal-day">25</span>
@@ -200,15 +200,15 @@ const timelineGroups = [
                 </div>
                 <div class="mmv__cal-grid">
                   <!-- May 2026: starts on Friday -->
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
-                  <span class="mmv__cal-day mmv__cal-day--empty"></span>
+                  <span class="mmv__cal-day" data-empty></span>
+                  <span class="mmv__cal-day" data-empty></span>
+                  <span class="mmv__cal-day" data-empty></span>
+                  <span class="mmv__cal-day" data-empty></span>
+                  <span class="mmv__cal-day" data-empty></span>
                   <span class="mmv__cal-day">1</span>
                   <span class="mmv__cal-day">2</span>
                   <span class="mmv__cal-day">3</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">4</span>
+                  <span class="mmv__cal-day" data-event>4</span>
                   <span class="mmv__cal-day">5</span>
                   <span class="mmv__cal-day">6</span>
                   <span class="mmv__cal-day">7</span>
@@ -217,14 +217,14 @@ const timelineGroups = [
                   <span class="mmv__cal-day">10</span>
                   <span class="mmv__cal-day">11</span>
                   <span class="mmv__cal-day">12</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">13</span>
+                  <span class="mmv__cal-day" data-event>13</span>
                   <span class="mmv__cal-day">14</span>
                   <span class="mmv__cal-day">15</span>
                   <span class="mmv__cal-day">16</span>
                   <span class="mmv__cal-day">17</span>
                   <span class="mmv__cal-day">18</span>
                   <span class="mmv__cal-day">19</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">20</span>
+                  <span class="mmv__cal-day" data-event>20</span>
                   <span class="mmv__cal-day">21</span>
                   <span class="mmv__cal-day">22</span>
                   <span class="mmv__cal-day">23</span>
@@ -233,7 +233,7 @@ const timelineGroups = [
                   <span class="mmv__cal-day">26</span>
                   <span class="mmv__cal-day">27</span>
                   <span class="mmv__cal-day">28</span>
-                  <span class="mmv__cal-day mmv__cal-day--event">29</span>
+                  <span class="mmv__cal-day" data-event>29</span>
                   <span class="mmv__cal-day">30</span>
                   <span class="mmv__cal-day">31</span>
                 </div>
@@ -501,7 +501,17 @@ const timelineGroups = [
     })
   }
 
-  function animateMobileCarousel(viewName: string, instant = false) {
+  function setupMobileClone() {
+    const track = document.querySelector('.mmv__features-track') as HTMLElement
+    if (!track || track.querySelector('.mmv__feature--clone')) return
+    const firstCard = track.querySelector('.mmv__feature') as HTMLElement
+    if (!firstCard) return
+    const clone = firstCard.cloneNode(true) as HTMLElement
+    clone.classList.add('mmv__feature--clone')
+    track.appendChild(clone)
+  }
+
+  function animateMobileCarousel(viewName: string, instant = false, wrapAround = false) {
     const track = document.querySelector('.mmv__features-track') as HTMLElement
     const container = document.querySelector('.mmv__features') as HTMLElement
     if (!track || !container) return
@@ -520,6 +530,22 @@ const timelineGroups = [
     const cards = track.querySelectorAll('.mmv__feature')
     if (cards.length === 0) return
 
+    // If wrapping around to first view, animate to clone then snap back
+    if (wrapAround && viewIndex === 0) {
+      const cloneCard = track.querySelector('.mmv__feature--clone') as HTMLElement
+      if (cloneCard) {
+        const containerWidth = container.offsetWidth
+        const cloneX = -(cloneCard.offsetLeft - (containerWidth - cloneCard.offsetWidth) / 2)
+        animate(track, { x: cloneX } as any, { duration: 0.5, easing: [...EASE] } as any)
+          .finished.then(() => {
+            const realCard = cards[0] as HTMLElement
+            const realX = -(realCard.offsetLeft - (containerWidth - realCard.offsetWidth) / 2)
+            animate(track, { x: realX } as any, { duration: 0 } as any)
+          })
+        return
+      }
+    }
+
     const card = cards[viewIndex] as HTMLElement
     const containerWidth = container.offsetWidth
     const targetX = -(card.offsetLeft - (containerWidth - card.offsetWidth) / 2)
@@ -535,6 +561,7 @@ const timelineGroups = [
     const section = document.querySelector('.mmv')
     if (!section) return
 
+    setupMobileClone()
     animateMobileCarousel('timeline', true)
 
     window.addEventListener('resize', () => {
@@ -556,23 +583,28 @@ const timelineGroups = [
   function startAnimation() {
     if (abortController) abortController.abort()
     abortController = new AbortController()
-    runViewsAnimation(abortController.signal)
+    runViewsAnimation(abortController.signal, false)
   }
 
-  function setActiveView(viewName: string) {
-    // Update feature cards
-    document.querySelectorAll('.mmv__feature').forEach((card) => {
+  function setActiveView(viewName: string, wrapAround = false) {
+    // Update feature cards (skip clone for active toggling)
+    document.querySelectorAll('.mmv__feature:not(.mmv__feature--clone)').forEach((card) => {
       card.classList.toggle('mmv__feature--active', (card as HTMLElement).dataset.view === viewName)
     })
+    // Update clone active state
+    const clone = document.querySelector('.mmv__feature--clone')
+    if (clone) {
+      clone.classList.toggle('mmv__feature--active', viewName === VIEWS[0])
+    }
     // Update tabbar buttons
     document.querySelectorAll('.mmv__tabbar-btn').forEach((btn) => {
       btn.classList.toggle('active', (btn as HTMLElement).dataset.tab === viewName)
     })
     // Animate mobile carousel
-    animateMobileCarousel(viewName)
+    animateMobileCarousel(viewName, false, wrapAround)
   }
 
-  async function runViewsAnimation(signal: AbortSignal) {
+  async function runViewsAnimation(signal: AbortSignal, isLoop: boolean) {
     const phone = document.querySelector('.mmv .phone-frame__phone') as HTMLElement
 
     // Timeline elements
@@ -584,7 +616,7 @@ const timelineGroups = [
     const calView = document.querySelector('.mmv__view--calendar') as HTMLElement
     const calScroll = document.querySelector('.mmv__cal-scroll-wrap') as HTMLElement
     const calPopup = document.querySelector('.mmv__popup--cal') as HTMLElement
-    const calSelectDay = document.querySelector('.mmv__cal-day[data-select]') as HTMLElement
+    const calSelectDay = document.querySelector('.mmv__cal-day[data-selected]') as HTMLElement
 
     // Map elements
     const mapView = document.querySelector('.mmv__view--map') as HTMLElement
@@ -600,7 +632,7 @@ const timelineGroups = [
       hideAllGates()
 
       // ===== TIMELINE =====
-      setActiveView('timeline')
+      setActiveView('timeline', isLoop)
       showGate('timeline')
       tlView.style.opacity = ''
       tlScroll.scrollTop = 0
@@ -639,7 +671,7 @@ const timelineGroups = [
 
       // Reset calendar state before showing
       calScroll.scrollTop = 0
-      calSelectDay?.classList.remove('mmv__cal-day--selected')
+      calSelectDay?.removeAttribute('data-selected-active')
       calPopup.style.opacity = '0'
       calPopup.style.transform = 'translateY(100%)'
 
@@ -663,9 +695,9 @@ const timelineGroups = [
 
       await delay(500, signal)
 
-      // Select March 16
+      // Select day
       if (calSelectDay) {
-        calSelectDay.classList.add('mmv__cal-day--selected')
+        calSelectDay.setAttribute('data-selected-active', '')
       }
       await delay(400, signal)
 
@@ -738,7 +770,7 @@ const timelineGroups = [
       await delay(600, signal)
 
       // Loop
-      runViewsAnimation(signal)
+      runViewsAnimation(signal, true)
     } catch (e) {
       if (e instanceof DOMException && e.name === 'AbortError') return
       throw e
@@ -1038,9 +1070,9 @@ const timelineGroups = [
   }
 
   .mmv__cal-day {
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     color: var(--color-stone-300);
-    padding: 5px 0;
+    padding: 8px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1048,42 +1080,50 @@ const timelineGroups = [
     position: relative;
 
     @media (width >= 40rem) {
-      font-size: 0.6rem;
-      padding: 6px 0;
+      font-size: 0.75rem;
+      padding: 9px 0;
     }
+  }
 
-    &--empty {
-      visibility: hidden;
+  .mmv__cal-day[data-empty] {
+    visibility: hidden;
+  }
+
+  .mmv__cal-day[data-event]::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: oklch(65% 0.2 15);
+
+    @media (width >= 40rem) {
+      width: 5px;
+      height: 5px;
     }
+  }
 
-    &--event::after {
-      content: '';
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: oklch(65% 0.2 15);
-    }
+  .mmv__cal-day[data-selected-active] {
+    z-index: 0;
+    color: var(--color-stone-50);
+    font-weight: 700;
+  }
 
-    &--selected {
-      color: var(--color-stone-50);
-      font-weight: 700;
+  .mmv__cal-day[data-selected-active]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: oklch(50% 0.15 260);
+    z-index: -1;
 
-      &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -55%);
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: oklch(50% 0.15 260);
-        z-index: -1;
-
-        @media (width >= 40rem) {
-          width: 22px;
-          height: 22px;
-        }
+    @media (width >= 40rem) {
+      .mmv__cal-day[data-selected-active]::before {
+        width: 32px;
+        height: 32px;
       }
     }
   }
