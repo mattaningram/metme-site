@@ -23,461 +23,432 @@ const timelineGroups = [
 ]
 ---
 
-<!-- Views Demo Animation Section -->
-<section class="mmv" aria-label="Three ways to remember">
-  <div class="mmv__content">
-    <!-- Left: text + feature cards -->
-    <div class="mmv__text">
-      <h2 class="mmv__heading">Three ways to remember</h2>
-      <p class="mmv__sub">Every contact saves when and where you met. Browse your network across time and space.</p>
+<!-- Views Demo -->
+<div class="mmv">
+  <PhoneFrame>
+    <!-- ===== TIMELINE VIEW ===== -->
+    <div class="mmv__gate" data-gate="timeline" style="display:none">
+      <div class="mmv__view mmv__view--timeline" data-view="timeline">
+        <div class="mmv__tl-scroll-wrap">
+          <div class="mmv__tl-scroll">
+            {
+              timelineGroups.map((group) => (
+                <>
+                  <div class="mmv__tl-header">{group.label}</div>
+                  {group.contacts.map((name) => (
+                    <div class="mmv__tl-row">
+                      <span class="mmv__tl-avatar">{name[0]}</span>
+                      <span class="mmv__tl-name">{name}</span>
+                    </div>
+                  ))}
+                </>
+              ))
+            }
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Right: phone demo -->
-    <PhoneFrame>
-      <!-- ===== TIMELINE VIEW ===== -->
-      <div class="mmv__gate" data-gate="timeline" style="display:none">
-        <div class="mmv__view mmv__view--timeline" data-view="timeline">
-          <div class="mmv__tl-scroll-wrap">
-            <div class="mmv__tl-scroll">
-              {
-                timelineGroups.map((group) => (
-                  <>
-                    <div class="mmv__tl-header">{group.label}</div>
-                    {group.contacts.map((name) => (
-                      <div class="mmv__tl-row">
-                        <span class="mmv__tl-avatar">{name[0]}</span>
-                        <span class="mmv__tl-name">{name}</span>
-                      </div>
-                    ))}
-                  </>
-                ))
-              }
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== CALENDAR VIEW ===== -->
-      <div class="mmv__gate" data-gate="calendar" style="display:none">
-        <div class="mmv__view mmv__view--calendar" data-view="calendar">
-          <div class="mmv__cal-scroll-wrap">
-            <div class="mmv__cal-scroll">
-              <!-- February 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">February 2026</p>
-                <div class="mmv__cal-weekdays">
-                  <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
-                    >Sat</span
-                  >
-                </div>
-                <div class="mmv__cal-grid">
-                  <!-- Feb 2026: starts on Sunday -->
-                  <span class="mmv__cal-day">1</span>
-                  <span class="mmv__cal-day">2</span>
-                  <span class="mmv__cal-day" data-event>3</span>
-                  <span class="mmv__cal-day">4</span>
-                  <span class="mmv__cal-day">5</span>
-                  <span class="mmv__cal-day">6</span>
-                  <span class="mmv__cal-day">7</span>
-                  <span class="mmv__cal-day">8</span>
-                  <span class="mmv__cal-day">9</span>
-                  <span class="mmv__cal-day">10</span>
-                  <span class="mmv__cal-day">11</span>
-                  <span class="mmv__cal-day">12</span>
-                  <span class="mmv__cal-day">13</span>
-                  <span class="mmv__cal-day" data-event>14</span>
-                  <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day" data-event>16</span>
-                  <span class="mmv__cal-day" data-event>17</span>
-                  <span class="mmv__cal-day" data-event>18</span>
-                  <span class="mmv__cal-day">19</span>
-                  <span class="mmv__cal-day">20</span>
-                  <span class="mmv__cal-day">21</span>
-                  <span class="mmv__cal-day">22</span>
-                  <span class="mmv__cal-day">23</span>
-                  <span class="mmv__cal-day">24</span>
-                  <span class="mmv__cal-day">25</span>
-                  <span class="mmv__cal-day">26</span>
-                  <span class="mmv__cal-day">27</span>
-                  <span class="mmv__cal-day">28</span>
-                </div>
+    <!-- ===== CALENDAR VIEW ===== -->
+    <div class="mmv__gate" data-gate="calendar" style="display:none">
+      <div class="mmv__view mmv__view--calendar" data-view="calendar">
+        <div class="mmv__cal-scroll-wrap">
+          <div class="mmv__cal-scroll">
+            <!-- February 2026 -->
+            <div class="mmv__cal-month">
+              <p class="mmv__cal-month-label">February 2026</p>
+              <div class="mmv__cal-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
+                  >Sat</span
+                >
               </div>
-              <!-- March 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">March 2026</p>
-                <div class="mmv__cal-weekdays">
-                  <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
-                    >Sat</span
-                  >
-                </div>
-                <div class="mmv__cal-grid">
-                  <!-- March 2026: starts on Sunday -->
-                  <span class="mmv__cal-day">1</span>
-                  <span class="mmv__cal-day" data-event>2</span>
-                  <span class="mmv__cal-day">3</span>
-                  <span class="mmv__cal-day">4</span>
-                  <span class="mmv__cal-day" data-event>5</span>
-                  <span class="mmv__cal-day">6</span>
-                  <span class="mmv__cal-day">7</span>
-                  <span class="mmv__cal-day">8</span>
-                  <span class="mmv__cal-day">9</span>
-                  <span class="mmv__cal-day">10</span>
-                  <span class="mmv__cal-day">11</span>
-                  <span class="mmv__cal-day">12</span>
-                  <span class="mmv__cal-day">13</span>
-                  <span class="mmv__cal-day" data-event>14</span>
-                  <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day" data-event data-selected>16</span>
-                  <span class="mmv__cal-day">17</span>
-                  <span class="mmv__cal-day">18</span>
-                  <span class="mmv__cal-day">19</span>
-                  <span class="mmv__cal-day">20</span>
-                  <span class="mmv__cal-day">21</span>
-                  <span class="mmv__cal-day">22</span>
-                  <span class="mmv__cal-day">23</span>
-                  <span class="mmv__cal-day">24</span>
-                  <span class="mmv__cal-day">25</span>
-                  <span class="mmv__cal-day">26</span>
-                  <span class="mmv__cal-day">27</span>
-                  <span class="mmv__cal-day">28</span>
-                  <span class="mmv__cal-day">29</span>
-                  <span class="mmv__cal-day">30</span>
-                  <span class="mmv__cal-day">31</span>
-                </div>
-              </div>
-              <!-- April 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">April 2026</p>
-                <div class="mmv__cal-weekdays">
-                  <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
-                    >Sat</span
-                  >
-                </div>
-                <div class="mmv__cal-grid">
-                  <!-- April 2026: starts on Wednesday -->
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day">1</span>
-                  <span class="mmv__cal-day">2</span>
-                  <span class="mmv__cal-day" data-event>3</span>
-                  <span class="mmv__cal-day">4</span>
-                  <span class="mmv__cal-day">5</span>
-                  <span class="mmv__cal-day">6</span>
-                  <span class="mmv__cal-day">7</span>
-                  <span class="mmv__cal-day">8</span>
-                  <span class="mmv__cal-day" data-event>9</span>
-                  <span class="mmv__cal-day">10</span>
-                  <span class="mmv__cal-day">11</span>
-                  <span class="mmv__cal-day">12</span>
-                  <span class="mmv__cal-day">13</span>
-                  <span class="mmv__cal-day">14</span>
-                  <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day">16</span>
-                  <span class="mmv__cal-day">17</span>
-                  <span class="mmv__cal-day" data-event>18</span>
-                  <span class="mmv__cal-day">19</span>
-                  <span class="mmv__cal-day">20</span>
-                  <span class="mmv__cal-day">21</span>
-                  <span class="mmv__cal-day" data-event>22</span>
-                  <span class="mmv__cal-day">23</span>
-                  <span class="mmv__cal-day">24</span>
-                  <span class="mmv__cal-day">25</span>
-                  <span class="mmv__cal-day">26</span>
-                  <span class="mmv__cal-day">27</span>
-                  <span class="mmv__cal-day">28</span>
-                  <span class="mmv__cal-day">29</span>
-                  <span class="mmv__cal-day">30</span>
-                </div>
-              </div>
-              <!-- May 2026 -->
-              <div class="mmv__cal-month">
-                <p class="mmv__cal-month-label">May 2026</p>
-                <div class="mmv__cal-weekdays">
-                  <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
-                    >Sat</span
-                  >
-                </div>
-                <div class="mmv__cal-grid">
-                  <!-- May 2026: starts on Friday -->
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day" data-empty></span>
-                  <span class="mmv__cal-day">1</span>
-                  <span class="mmv__cal-day">2</span>
-                  <span class="mmv__cal-day">3</span>
-                  <span class="mmv__cal-day" data-event>4</span>
-                  <span class="mmv__cal-day">5</span>
-                  <span class="mmv__cal-day">6</span>
-                  <span class="mmv__cal-day">7</span>
-                  <span class="mmv__cal-day">8</span>
-                  <span class="mmv__cal-day">9</span>
-                  <span class="mmv__cal-day">10</span>
-                  <span class="mmv__cal-day">11</span>
-                  <span class="mmv__cal-day">12</span>
-                  <span class="mmv__cal-day" data-event>13</span>
-                  <span class="mmv__cal-day">14</span>
-                  <span class="mmv__cal-day">15</span>
-                  <span class="mmv__cal-day">16</span>
-                  <span class="mmv__cal-day">17</span>
-                  <span class="mmv__cal-day">18</span>
-                  <span class="mmv__cal-day">19</span>
-                  <span class="mmv__cal-day" data-event>20</span>
-                  <span class="mmv__cal-day">21</span>
-                  <span class="mmv__cal-day">22</span>
-                  <span class="mmv__cal-day">23</span>
-                  <span class="mmv__cal-day">24</span>
-                  <span class="mmv__cal-day">25</span>
-                  <span class="mmv__cal-day">26</span>
-                  <span class="mmv__cal-day">27</span>
-                  <span class="mmv__cal-day">28</span>
-                  <span class="mmv__cal-day" data-event>29</span>
-                  <span class="mmv__cal-day">30</span>
-                  <span class="mmv__cal-day">31</span>
-                </div>
+              <div class="mmv__cal-grid">
+                <!-- Feb 2026: starts on Sunday -->
+                <span class="mmv__cal-day">1</span>
+                <span class="mmv__cal-day">2</span>
+                <span class="mmv__cal-day" data-event>3</span>
+                <span class="mmv__cal-day">4</span>
+                <span class="mmv__cal-day">5</span>
+                <span class="mmv__cal-day">6</span>
+                <span class="mmv__cal-day">7</span>
+                <span class="mmv__cal-day">8</span>
+                <span class="mmv__cal-day">9</span>
+                <span class="mmv__cal-day">10</span>
+                <span class="mmv__cal-day">11</span>
+                <span class="mmv__cal-day">12</span>
+                <span class="mmv__cal-day">13</span>
+                <span class="mmv__cal-day" data-event>14</span>
+                <span class="mmv__cal-day">15</span>
+                <span class="mmv__cal-day" data-event>16</span>
+                <span class="mmv__cal-day" data-event>17</span>
+                <span class="mmv__cal-day" data-event>18</span>
+                <span class="mmv__cal-day">19</span>
+                <span class="mmv__cal-day">20</span>
+                <span class="mmv__cal-day">21</span>
+                <span class="mmv__cal-day">22</span>
+                <span class="mmv__cal-day">23</span>
+                <span class="mmv__cal-day">24</span>
+                <span class="mmv__cal-day">25</span>
+                <span class="mmv__cal-day">26</span>
+                <span class="mmv__cal-day">27</span>
+                <span class="mmv__cal-day">28</span>
               </div>
             </div>
-            <!-- Calendar popup -->
-            <div class="mmv__popup mmv__popup--cal">
-              <p class="mmv__popup-date">Monday, March 16, 2026</p>
-              <p class="mmv__popup-count">1 contact</p>
-              <div class="mmv__popup-contact">
-                <span class="mmv__tl-avatar">J</span>
-                <div class="mmv__popup-info">
-                  <span class="mmv__popup-name">Jane Smith</span>
-                  <span class="mmv__popup-detail">
-                    <span class="mmv__popup-dot mmv__popup-dot--met"></span>
-                    Met contact date
-                  </span>
-                  <span class="mmv__popup-detail">
-                    <span class="mmv__popup-dot mmv__popup-dot--bday"></span>
-                    Birthday (turns 33)
-                  </span>
-                </div>
+            <!-- March 2026 -->
+            <div class="mmv__cal-month">
+              <p class="mmv__cal-month-label">March 2026</p>
+              <div class="mmv__cal-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
+                  >Sat</span
+                >
+              </div>
+              <div class="mmv__cal-grid">
+                <!-- March 2026: starts on Sunday -->
+                <span class="mmv__cal-day">1</span>
+                <span class="mmv__cal-day" data-event>2</span>
+                <span class="mmv__cal-day">3</span>
+                <span class="mmv__cal-day">4</span>
+                <span class="mmv__cal-day" data-event>5</span>
+                <span class="mmv__cal-day">6</span>
+                <span class="mmv__cal-day">7</span>
+                <span class="mmv__cal-day">8</span>
+                <span class="mmv__cal-day">9</span>
+                <span class="mmv__cal-day">10</span>
+                <span class="mmv__cal-day">11</span>
+                <span class="mmv__cal-day">12</span>
+                <span class="mmv__cal-day">13</span>
+                <span class="mmv__cal-day" data-event>14</span>
+                <span class="mmv__cal-day">15</span>
+                <span class="mmv__cal-day" data-event data-selected>16</span>
+                <span class="mmv__cal-day">17</span>
+                <span class="mmv__cal-day">18</span>
+                <span class="mmv__cal-day">19</span>
+                <span class="mmv__cal-day">20</span>
+                <span class="mmv__cal-day">21</span>
+                <span class="mmv__cal-day">22</span>
+                <span class="mmv__cal-day">23</span>
+                <span class="mmv__cal-day">24</span>
+                <span class="mmv__cal-day">25</span>
+                <span class="mmv__cal-day">26</span>
+                <span class="mmv__cal-day">27</span>
+                <span class="mmv__cal-day">28</span>
+                <span class="mmv__cal-day">29</span>
+                <span class="mmv__cal-day">30</span>
+                <span class="mmv__cal-day">31</span>
+              </div>
+            </div>
+            <!-- April 2026 -->
+            <div class="mmv__cal-month">
+              <p class="mmv__cal-month-label">April 2026</p>
+              <div class="mmv__cal-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
+                  >Sat</span
+                >
+              </div>
+              <div class="mmv__cal-grid">
+                <!-- April 2026: starts on Wednesday -->
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day">1</span>
+                <span class="mmv__cal-day">2</span>
+                <span class="mmv__cal-day" data-event>3</span>
+                <span class="mmv__cal-day">4</span>
+                <span class="mmv__cal-day">5</span>
+                <span class="mmv__cal-day">6</span>
+                <span class="mmv__cal-day">7</span>
+                <span class="mmv__cal-day">8</span>
+                <span class="mmv__cal-day" data-event>9</span>
+                <span class="mmv__cal-day">10</span>
+                <span class="mmv__cal-day">11</span>
+                <span class="mmv__cal-day">12</span>
+                <span class="mmv__cal-day">13</span>
+                <span class="mmv__cal-day">14</span>
+                <span class="mmv__cal-day">15</span>
+                <span class="mmv__cal-day">16</span>
+                <span class="mmv__cal-day">17</span>
+                <span class="mmv__cal-day" data-event>18</span>
+                <span class="mmv__cal-day">19</span>
+                <span class="mmv__cal-day">20</span>
+                <span class="mmv__cal-day">21</span>
+                <span class="mmv__cal-day" data-event>22</span>
+                <span class="mmv__cal-day">23</span>
+                <span class="mmv__cal-day">24</span>
+                <span class="mmv__cal-day">25</span>
+                <span class="mmv__cal-day">26</span>
+                <span class="mmv__cal-day">27</span>
+                <span class="mmv__cal-day">28</span>
+                <span class="mmv__cal-day">29</span>
+                <span class="mmv__cal-day">30</span>
+              </div>
+            </div>
+            <!-- May 2026 -->
+            <div class="mmv__cal-month">
+              <p class="mmv__cal-month-label">May 2026</p>
+              <div class="mmv__cal-weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span
+                  >Sat</span
+                >
+              </div>
+              <div class="mmv__cal-grid">
+                <!-- May 2026: starts on Friday -->
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day" data-empty></span>
+                <span class="mmv__cal-day">1</span>
+                <span class="mmv__cal-day">2</span>
+                <span class="mmv__cal-day">3</span>
+                <span class="mmv__cal-day" data-event>4</span>
+                <span class="mmv__cal-day">5</span>
+                <span class="mmv__cal-day">6</span>
+                <span class="mmv__cal-day">7</span>
+                <span class="mmv__cal-day">8</span>
+                <span class="mmv__cal-day">9</span>
+                <span class="mmv__cal-day">10</span>
+                <span class="mmv__cal-day">11</span>
+                <span class="mmv__cal-day">12</span>
+                <span class="mmv__cal-day" data-event>13</span>
+                <span class="mmv__cal-day">14</span>
+                <span class="mmv__cal-day">15</span>
+                <span class="mmv__cal-day">16</span>
+                <span class="mmv__cal-day">17</span>
+                <span class="mmv__cal-day">18</span>
+                <span class="mmv__cal-day">19</span>
+                <span class="mmv__cal-day" data-event>20</span>
+                <span class="mmv__cal-day">21</span>
+                <span class="mmv__cal-day">22</span>
+                <span class="mmv__cal-day">23</span>
+                <span class="mmv__cal-day">24</span>
+                <span class="mmv__cal-day">25</span>
+                <span class="mmv__cal-day">26</span>
+                <span class="mmv__cal-day">27</span>
+                <span class="mmv__cal-day">28</span>
+                <span class="mmv__cal-day" data-event>29</span>
+                <span class="mmv__cal-day">30</span>
+                <span class="mmv__cal-day">31</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- ===== MAP VIEW ===== -->
-      <div class="mmv__gate" data-gate="map" style="display:none">
-        <div class="mmv__view mmv__view--map" data-view="map">
-          <div class="mmv__map-container">
-            <svg
-              class="mmv__map-svg"
-              viewBox="0 0 800 550"
-              preserveAspectRatio="xMidYMid slice"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <!-- Water -->
-              <rect width="800" height="550" fill="oklch(18% 0.006 50)"></rect>
-              <path d="M0 0 L100 0 L80 100 L90 220 L70 350 L85 550 L0 550Z" fill="oklch(22% 0.03 240)"></path>
-              <path d="M580 550 L610 470 L700 440 L800 460 L800 550Z" fill="oklch(22% 0.03 240)"></path>
-              <path d="M720 0 L800 0 L800 130 L740 110 L730 50Z" fill="oklch(22% 0.03 240)"></path>
-
-              <!-- City blocks -->
-              <g fill="oklch(22% 0.008 50)">
-                <rect x="120" y="25" width="70" height="55" rx="2"></rect>
-                <rect x="205" y="25" width="80" height="55" rx="2"></rect>
-                <rect x="300" y="25" width="65" height="55" rx="2"></rect>
-                <rect x="380" y="25" width="75" height="55" rx="2"></rect>
-                <rect x="470" y="25" width="70" height="55" rx="2"></rect>
-                <rect x="555" y="25" width="80" height="55" rx="2"></rect>
-                <rect x="650" y="25" width="55" height="55" rx="2"></rect>
-
-                <rect x="120" y="100" width="70" height="60" rx="2"></rect>
-                <rect x="205" y="100" width="80" height="60" rx="2"></rect>
-                <rect x="300" y="100" width="65" height="60" rx="2"></rect>
-                <rect x="380" y="100" width="75" height="60" rx="2"></rect>
-                <rect x="470" y="100" width="70" height="60" rx="2"></rect>
-                <rect x="555" y="100" width="80" height="60" rx="2"></rect>
-                <rect x="650" y="100" width="55" height="60" rx="2"></rect>
-
-                <rect x="120" y="180" width="70" height="55" rx="2"></rect>
-                <rect x="205" y="180" width="80" height="55" rx="2"></rect>
-                <rect x="300" y="180" width="65" height="55" rx="2"></rect>
-                <rect x="380" y="180" width="75" height="55" rx="2"></rect>
-                <rect x="470" y="180" width="70" height="55" rx="2"></rect>
-                <rect x="555" y="180" width="80" height="55" rx="2"></rect>
-                <rect x="650" y="180" width="55" height="55" rx="2"></rect>
-
-                <rect x="120" y="255" width="70" height="60" rx="2"></rect>
-                <rect x="205" y="255" width="80" height="60" rx="2"></rect>
-                <rect x="300" y="255" width="65" height="60" rx="2"></rect>
-                <rect x="380" y="255" width="75" height="60" rx="2"></rect>
-                <rect x="470" y="255" width="70" height="60" rx="2"></rect>
-                <rect x="555" y="255" width="80" height="60" rx="2"></rect>
-
-                <rect x="120" y="335" width="70" height="55" rx="2"></rect>
-                <rect x="205" y="335" width="80" height="55" rx="2"></rect>
-                <rect x="300" y="335" width="65" height="55" rx="2"></rect>
-                <rect x="380" y="335" width="75" height="55" rx="2"></rect>
-                <rect x="470" y="335" width="70" height="55" rx="2"></rect>
-
-                <rect x="120" y="410" width="70" height="60" rx="2"></rect>
-                <rect x="205" y="410" width="80" height="60" rx="2"></rect>
-                <rect x="300" y="410" width="65" height="60" rx="2"></rect>
-                <rect x="380" y="410" width="75" height="60" rx="2"></rect>
-
-                <rect x="120" y="490" width="70" height="45" rx="2"></rect>
-                <rect x="205" y="490" width="80" height="45" rx="2"></rect>
-                <rect x="300" y="490" width="65" height="45" rx="2"></rect>
-              </g>
-
-              <!-- Major roads -->
-              <g stroke="oklch(25% 0.008 50)" stroke-width="2" fill="none">
-                <line x1="115" y1="0" x2="115" y2="550"></line>
-                <line x1="195" y1="0" x2="195" y2="550"></line>
-                <line x1="290" y1="0" x2="290" y2="550"></line>
-                <line x1="370" y1="0" x2="370" y2="550"></line>
-                <line x1="460" y1="0" x2="460" y2="550"></line>
-                <line x1="545" y1="0" x2="545" y2="400"></line>
-                <line x1="640" y1="0" x2="640" y2="325"></line>
-                <line x1="710" y1="0" x2="710" y2="250"></line>
-                <line x1="100" y1="92" x2="720" y2="92"></line>
-                <line x1="100" y1="172" x2="720" y2="172"></line>
-                <line x1="100" y1="248" x2="710" y2="248"></line>
-                <line x1="100" y1="328" x2="640" y2="328"></line>
-                <line x1="100" y1="403" x2="550" y2="403"></line>
-                <line x1="100" y1="483" x2="460" y2="483"></line>
-              </g>
-
-              <!-- Diagonal avenue -->
-              <line x1="110" y1="70" x2="630" y2="360" stroke="oklch(27% 0.008 50)" stroke-width="3"></line>
-            </svg>
-
-            <!-- Map markers -->
-            <div class="mmv__map-marker" style="top: 18%; left: 30%;" data-name="Michele Mouton">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
-                  d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
-                  fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
-                ></circle></svg
-              >
-            </div>
-            <div class="mmv__map-marker" style="top: 32%; left: 55%;" data-name="Sarah Chen">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
-                  d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
-                  fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
-                ></circle></svg
-              >
-            </div>
-            <div class="mmv__map-marker" style="top: 45%; left: 38%;" data-name="Priya Sharma">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
-                  d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
-                  fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
-                ></circle></svg
-              >
-            </div>
-            <div class="mmv__map-marker mmv__map-marker--target" style="top: 55%; left: 48%;" data-name="Marcus Rivera">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
-                  d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
-                  fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
-                ></circle></svg
-              >
-            </div>
-            <div class="mmv__map-marker" style="top: 28%; left: 70%;" data-name="Tina Park">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
-                  d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
-                  fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
-                ></circle></svg
-              >
-            </div>
-            <div class="mmv__map-marker" style="top: 65%; left: 25%;" data-name="Layla Okonkwo">
-              <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-                ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
-                  d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
-                  fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
-                ></circle></svg
-              >
-            </div>
-          </div>
-          <!-- Map popup -->
-          <div class="mmv__popup mmv__popup--map">
+          <!-- Calendar popup -->
+          <div class="mmv__popup mmv__popup--cal">
+            <p class="mmv__popup-date">Monday, March 16, 2026</p>
+            <p class="mmv__popup-count">1 contact</p>
             <div class="mmv__popup-contact">
-              <span class="mmv__tl-avatar">M</span>
+              <span class="mmv__tl-avatar">J</span>
               <div class="mmv__popup-info">
-                <span class="mmv__popup-name">Marcus Rivera</span>
-                <span class="mmv__popup-detail">Designer at Figma</span>
-                <span class="mmv__popup-location">
-                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    ><path d="M13 6.5c0 4.5-5 8-5 8s-5-3.5-5-8a5 5 0 0 1 10 0z" stroke="currentColor" stroke-width="1.2"
-                    ></path><circle cx="8" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.2"></circle></svg
-                  >
-                  Met at Union Square
+                <span class="mmv__popup-name">Jane Smith</span>
+                <span class="mmv__popup-detail">
+                  <span class="mmv__popup-dot mmv__popup-dot--met"></span>
+                  Met contact date
+                </span>
+                <span class="mmv__popup-detail">
+                  <span class="mmv__popup-dot mmv__popup-dot--bday"></span>
+                  Birthday (turns 33)
                 </span>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- ===== TAB BAR ===== -->
-      <div class="mmv__tabbar">
-        <button class="mmv__tabbar-btn active" data-tab="timeline" aria-label="Timeline">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"></path></svg
+    <!-- ===== MAP VIEW ===== -->
+    <div class="mmv__gate" data-gate="map" style="display:none">
+      <div class="mmv__view mmv__view--map" data-view="map">
+        <div class="mmv__map-container">
+          <svg
+            class="mmv__map-svg"
+            viewBox="0 0 800 550"
+            preserveAspectRatio="xMidYMid slice"
+            xmlns="http://www.w3.org/2000/svg"
           >
-        </button>
-        <button class="mmv__tabbar-btn" data-tab="calendar" aria-label="Calendar">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-            ><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"></rect><path
-              d="M16 2v4M8 2v4M3 10h18"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"></path></svg
-          >
-        </button>
-        <button class="mmv__tabbar-btn" data-tab="map" aria-label="Map">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-            ><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5"
-            ></path><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"></circle></svg
-          >
-        </button>
-      </div>
-    </PhoneFrame>
+            <!-- Water -->
+            <rect width="800" height="550" fill="oklch(18% 0.006 50)"></rect>
+            <path d="M0 0 L100 0 L80 100 L90 220 L70 350 L85 550 L0 550Z" fill="oklch(22% 0.03 240)"></path>
+            <path d="M580 550 L610 470 L700 440 L800 460 L800 550Z" fill="oklch(22% 0.03 240)"></path>
+            <path d="M720 0 L800 0 L800 130 L740 110 L730 50Z" fill="oklch(22% 0.03 240)"></path>
 
-    <!-- Feature explanation cards (below phone on mobile, left column on desktop) -->
-    <div class="mmv__features">
-      <div class="mmv__features-track">
-        <div class="mmv__feature mmv__feature--active" data-view="timeline">
-          <span class="mmv__feature-title">Timeline</span>
-          <span class="mmv__feature-desc">Scroll through everyone you've met, organized by when you met them.</span>
+            <!-- City blocks -->
+            <g fill="oklch(22% 0.008 50)">
+              <rect x="120" y="25" width="70" height="55" rx="2"></rect>
+              <rect x="205" y="25" width="80" height="55" rx="2"></rect>
+              <rect x="300" y="25" width="65" height="55" rx="2"></rect>
+              <rect x="380" y="25" width="75" height="55" rx="2"></rect>
+              <rect x="470" y="25" width="70" height="55" rx="2"></rect>
+              <rect x="555" y="25" width="80" height="55" rx="2"></rect>
+              <rect x="650" y="25" width="55" height="55" rx="2"></rect>
+
+              <rect x="120" y="100" width="70" height="60" rx="2"></rect>
+              <rect x="205" y="100" width="80" height="60" rx="2"></rect>
+              <rect x="300" y="100" width="65" height="60" rx="2"></rect>
+              <rect x="380" y="100" width="75" height="60" rx="2"></rect>
+              <rect x="470" y="100" width="70" height="60" rx="2"></rect>
+              <rect x="555" y="100" width="80" height="60" rx="2"></rect>
+              <rect x="650" y="100" width="55" height="60" rx="2"></rect>
+
+              <rect x="120" y="180" width="70" height="55" rx="2"></rect>
+              <rect x="205" y="180" width="80" height="55" rx="2"></rect>
+              <rect x="300" y="180" width="65" height="55" rx="2"></rect>
+              <rect x="380" y="180" width="75" height="55" rx="2"></rect>
+              <rect x="470" y="180" width="70" height="55" rx="2"></rect>
+              <rect x="555" y="180" width="80" height="55" rx="2"></rect>
+              <rect x="650" y="180" width="55" height="55" rx="2"></rect>
+
+              <rect x="120" y="255" width="70" height="60" rx="2"></rect>
+              <rect x="205" y="255" width="80" height="60" rx="2"></rect>
+              <rect x="300" y="255" width="65" height="60" rx="2"></rect>
+              <rect x="380" y="255" width="75" height="60" rx="2"></rect>
+              <rect x="470" y="255" width="70" height="60" rx="2"></rect>
+              <rect x="555" y="255" width="80" height="60" rx="2"></rect>
+
+              <rect x="120" y="335" width="70" height="55" rx="2"></rect>
+              <rect x="205" y="335" width="80" height="55" rx="2"></rect>
+              <rect x="300" y="335" width="65" height="55" rx="2"></rect>
+              <rect x="380" y="335" width="75" height="55" rx="2"></rect>
+              <rect x="470" y="335" width="70" height="55" rx="2"></rect>
+
+              <rect x="120" y="410" width="70" height="60" rx="2"></rect>
+              <rect x="205" y="410" width="80" height="60" rx="2"></rect>
+              <rect x="300" y="410" width="65" height="60" rx="2"></rect>
+              <rect x="380" y="410" width="75" height="60" rx="2"></rect>
+
+              <rect x="120" y="490" width="70" height="45" rx="2"></rect>
+              <rect x="205" y="490" width="80" height="45" rx="2"></rect>
+              <rect x="300" y="490" width="65" height="45" rx="2"></rect>
+            </g>
+
+            <!-- Major roads -->
+            <g stroke="oklch(25% 0.008 50)" stroke-width="2" fill="none">
+              <line x1="115" y1="0" x2="115" y2="550"></line>
+              <line x1="195" y1="0" x2="195" y2="550"></line>
+              <line x1="290" y1="0" x2="290" y2="550"></line>
+              <line x1="370" y1="0" x2="370" y2="550"></line>
+              <line x1="460" y1="0" x2="460" y2="550"></line>
+              <line x1="545" y1="0" x2="545" y2="400"></line>
+              <line x1="640" y1="0" x2="640" y2="325"></line>
+              <line x1="710" y1="0" x2="710" y2="250"></line>
+              <line x1="100" y1="92" x2="720" y2="92"></line>
+              <line x1="100" y1="172" x2="720" y2="172"></line>
+              <line x1="100" y1="248" x2="710" y2="248"></line>
+              <line x1="100" y1="328" x2="640" y2="328"></line>
+              <line x1="100" y1="403" x2="550" y2="403"></line>
+              <line x1="100" y1="483" x2="460" y2="483"></line>
+            </g>
+
+            <!-- Diagonal avenue -->
+            <line x1="110" y1="70" x2="630" y2="360" stroke="oklch(27% 0.008 50)" stroke-width="3"></line>
+          </svg>
+
+          <!-- Map markers -->
+          <div class="mmv__map-marker" style="top: 18%; left: 30%;" data-name="Michele Mouton">
+            <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+              ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
+                d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
+                fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
+              ></circle></svg
+            >
+          </div>
+          <div class="mmv__map-marker" style="top: 32%; left: 55%;" data-name="Sarah Chen">
+            <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+              ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
+                d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
+                fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
+              ></circle></svg
+            >
+          </div>
+          <div class="mmv__map-marker" style="top: 45%; left: 38%;" data-name="Priya Sharma">
+            <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+              ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
+                d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
+                fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
+              ></circle></svg
+            >
+          </div>
+          <div class="mmv__map-marker mmv__map-marker--target" style="top: 55%; left: 48%;" data-name="Marcus Rivera">
+            <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+              ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
+                d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
+                fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
+              ></circle></svg
+            >
+          </div>
+          <div class="mmv__map-marker" style="top: 28%; left: 70%;" data-name="Tina Park">
+            <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+              ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
+                d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
+                fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
+              ></circle></svg
+            >
+          </div>
+          <div class="mmv__map-marker" style="top: 65%; left: 25%;" data-name="Layla Okonkwo">
+            <svg viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+              ><ellipse cx="12" cy="30" rx="5" ry="2" fill="oklch(0% 0 0 / 0.3)"></ellipse><path
+                d="M12 0C6.48 0 2 4.48 2 10c0 7.5 10 20 10 20s10-12.5 10-20c0-5.52-4.48-10-10-10z"
+                fill="oklch(58% 0.22 20)"></path><circle cx="12" cy="10" r="4" fill="oklch(75% 0.15 20)"
+              ></circle></svg
+            >
+          </div>
         </div>
-        <div class="mmv__feature" data-view="calendar">
-          <span class="mmv__feature-title">Calendar</span>
-          <span class="mmv__feature-desc"
-            >See which days you met new people. Tap any date for details and birthdays.</span
-          >
-        </div>
-        <div class="mmv__feature" data-view="map">
-          <span class="mmv__feature-title">Map</span>
-          <span class="mmv__feature-desc">See where you've met people pinned on a map. Tap to recall the context.</span>
+        <!-- Map popup -->
+        <div class="mmv__popup mmv__popup--map">
+          <div class="mmv__popup-contact">
+            <span class="mmv__tl-avatar">M</span>
+            <div class="mmv__popup-info">
+              <span class="mmv__popup-name">Marcus Rivera</span>
+              <span class="mmv__popup-detail">Designer at Figma</span>
+              <span class="mmv__popup-location">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  ><path d="M13 6.5c0 4.5-5 8-5 8s-5-3.5-5-8a5 5 0 0 1 10 0z" stroke="currentColor" stroke-width="1.2"
+                  ></path><circle cx="8" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.2"></circle></svg
+                >
+                Met at Union Square
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+
+    <!-- ===== TAB BAR ===== -->
+    <div class="mmv__tabbar">
+      <button class="mmv__tabbar-btn active" data-tab="timeline" aria-label="Timeline">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"></path></svg
+        >
+      </button>
+      <button class="mmv__tabbar-btn" data-tab="calendar" aria-label="Calendar">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+          ><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"></rect><path
+            d="M16 2v4M8 2v4M3 10h18"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"></path></svg
+        >
+      </button>
+      <button class="mmv__tabbar-btn" data-tab="map" aria-label="Map">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+          ><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5"
+          ></path><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"></circle></svg
+        >
+      </button>
+    </div>
+  </PhoneFrame>
+</div>
 
 <script>
-  import { animate, stagger, inView } from 'motion'
+  import { animate, stagger } from 'motion'
 
   const EASE = [0.25, 1, 0.5, 1] as const
   const EXIT_EASE = [0.5, 0, 0.75, 0] as const
-  const VIEWS = ['timeline', 'calendar', 'map']
 
-  let abortController: AbortController | null = null
+  let viewAbortController: AbortController | null = null
+  let currentView: string | null = null
 
   function delay(ms: number, signal: AbortSignal): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -501,137 +472,24 @@ const timelineGroups = [
     })
   }
 
-  function setupMobileClone() {
-    const track = document.querySelector('.mmv__features-track') as HTMLElement
-    if (!track || track.querySelector('.mmv__feature--clone')) return
-    const firstCard = track.querySelector('.mmv__feature') as HTMLElement
-    if (!firstCard) return
-    const clone = firstCard.cloneNode(true) as HTMLElement
-    clone.classList.add('mmv__feature--clone')
-    track.appendChild(clone)
-  }
-
-  function animateMobileCarousel(viewName: string, instant = false, wrapAround = false) {
-    const track = document.querySelector('.mmv__features-track') as HTMLElement
-    const container = document.querySelector('.mmv__features') as HTMLElement
-    if (!track || !container) return
-
-    const isMobile = getComputedStyle(container).overflow === 'hidden'
-
-    if (!isMobile) {
-      // Reset transform on desktop
-      animate(track, { x: 0 } as any, { duration: 0 } as any)
-      return
-    }
-
-    const viewIndex = VIEWS.indexOf(viewName)
-    if (viewIndex === -1) return
-
-    const cards = track.querySelectorAll('.mmv__feature')
-    if (cards.length === 0) return
-
-    // If wrapping around to first view, animate to clone then snap back
-    if (wrapAround && viewIndex === 0) {
-      const cloneCard = track.querySelector('.mmv__feature--clone') as HTMLElement
-      if (cloneCard) {
-        const containerWidth = container.offsetWidth
-        const cloneX = -(cloneCard.offsetLeft - (containerWidth - cloneCard.offsetWidth) / 2)
-        animate(track, { x: cloneX } as any, { duration: 0.5, easing: [...EASE] } as any).finished.then(() => {
-          const realCard = cards[0] as HTMLElement
-          const realX = -(realCard.offsetLeft - (containerWidth - realCard.offsetWidth) / 2)
-          animate(track, { x: realX } as any, { duration: 0 } as any)
-        })
-        return
-      }
-    }
-
-    const card = cards[viewIndex] as HTMLElement
-    const containerWidth = container.offsetWidth
-    const targetX = -(card.offsetLeft - (containerWidth - card.offsetWidth) / 2)
-
-    if (instant) {
-      animate(track, { x: targetX } as any, { duration: 0 } as any)
-    } else {
-      animate(track, { x: targetX } as any, { duration: 0.5, easing: [...EASE] } as any)
-    }
-  }
-
-  function initViewsAnimation() {
-    const section = document.querySelector('.mmv')
-    if (!section) return
-
-    setupMobileClone()
-    animateMobileCarousel('timeline', true)
-
-    window.addEventListener('resize', () => {
-      const activeCard = document.querySelector('.mmv__features .mmv__feature--active') as HTMLElement
-      if (activeCard) {
-        animateMobileCarousel(activeCard.dataset.view || 'timeline', true)
-      }
-    })
-
-    inView(
-      section,
-      () => {
-        startAnimation()
-      },
-      { amount: 0.3 },
-    )
-  }
-
-  function startAnimation() {
-    if (abortController) abortController.abort()
-    abortController = new AbortController()
-    runViewsAnimation(abortController.signal, false)
-  }
-
-  function setActiveView(viewName: string, wrapAround = false) {
-    // Update feature cards (skip clone for active toggling)
-    document.querySelectorAll('.mmv__feature:not(.mmv__feature--clone)').forEach((card) => {
-      card.classList.toggle('mmv__feature--active', (card as HTMLElement).dataset.view === viewName)
-    })
-    // Update clone active state
-    const clone = document.querySelector('.mmv__feature--clone')
-    if (clone) {
-      clone.classList.toggle('mmv__feature--active', viewName === VIEWS[0])
-    }
-    // Update tabbar buttons
+  function setActiveTab(viewName: string) {
     document.querySelectorAll('.mmv__tabbar-btn').forEach((btn) => {
       btn.classList.toggle('active', (btn as HTMLElement).dataset.tab === viewName)
     })
-    // Animate mobile carousel
-    animateMobileCarousel(viewName, false, wrapAround)
   }
 
-  async function runViewsAnimation(signal: AbortSignal, isLoop: boolean) {
-    const phone = document.querySelector('.mmv .phone-frame__phone') as HTMLElement
+  // ===== Individual view animations (values preserved exactly from original) =====
 
-    // Timeline elements
+  async function showTimeline(signal: AbortSignal) {
     const tlView = document.querySelector('.mmv__view--timeline') as HTMLElement
     const tlScroll = document.querySelector('.mmv__tl-scroll-wrap') as HTMLElement
     const allTlElements = document.querySelectorAll('.mmv__tl-header, .mmv__tl-row')
 
-    // Calendar elements
-    const calView = document.querySelector('.mmv__view--calendar') as HTMLElement
-    const calScroll = document.querySelector('.mmv__cal-scroll-wrap') as HTMLElement
-    const calPopup = document.querySelector('.mmv__popup--cal') as HTMLElement
-    const calSelectDay = document.querySelector('.mmv__cal-day[data-selected]') as HTMLElement
-
-    // Map elements
-    const mapView = document.querySelector('.mmv__view--map') as HTMLElement
-    const mapContainer = document.querySelector('.mmv__map-container') as HTMLElement
-    const mapMarkers = document.querySelectorAll('.mmv__map-marker')
-    const mapTarget = document.querySelector('.mmv__map-marker--target') as HTMLElement
-    const mapPopup = document.querySelector('.mmv__popup--map') as HTMLElement
-
-    if (!phone || !tlView || !calView || !mapView) return
+    if (!tlView || !tlScroll) return
 
     try {
-      // Hide all gates at the start of each cycle
       hideAllGates()
-
-      // ===== TIMELINE =====
-      setActiveView('timeline', isLoop)
+      setActiveTab('timeline')
       showGate('timeline')
       tlView.style.opacity = ''
       tlScroll.scrollTop = 0
@@ -657,18 +515,26 @@ const timelineGroups = [
         },
       } as any).finished
       if (signal.aborted) return
+      // View stays visible until scroll controller switches
+    } catch (e) {
+      if (e instanceof DOMException && e.name === 'AbortError') return
+      throw e
+    }
+  }
 
-      await delay(1500, signal)
+  async function showCalendar(signal: AbortSignal) {
+    const calView = document.querySelector('.mmv__view--calendar') as HTMLElement
+    const calScroll = document.querySelector('.mmv__cal-scroll-wrap') as HTMLElement
+    const calPopup = document.querySelector('.mmv__popup--cal') as HTMLElement
+    const calSelectDay = document.querySelector('.mmv__cal-day[data-selected]') as HTMLElement
 
-      // Fade out timeline then hide gate
-      await animate(tlView, { opacity: 0 } as any, { duration: 0.4, easing: [...EXIT_EASE] } as any).finished
-      if (signal.aborted) return
+    if (!calView || !calScroll || !calPopup) return
+
+    try {
       hideAllGates()
+      setActiveTab('calendar')
 
-      // ===== CALENDAR =====
-      setActiveView('calendar')
-
-      // Reset calendar state before showing (gate must be visible for scrollTop to work)
+      // Reset calendar state before showing
       calView.style.opacity = '0'
       calSelectDay?.removeAttribute('data-selected-active')
       calPopup.style.opacity = '0'
@@ -677,7 +543,7 @@ const timelineGroups = [
       const calScrollStart = 400
       calScroll.scrollTop = calScrollStart
 
-      // Fade in calendar (already at scroll position)
+      // Fade in calendar
       await animate(calView, { opacity: [0, 1] } as any, { duration: 0.4, easing: [...EASE] } as any).finished
       if (signal.aborted) return
 
@@ -709,17 +575,25 @@ const timelineGroups = [
         { duration: 0.5, easing: [...EASE] } as any,
       ).finished
       if (signal.aborted) return
+      // View stays visible until scroll controller switches
+    } catch (e) {
+      if (e instanceof DOMException && e.name === 'AbortError') return
+      throw e
+    }
+  }
 
-      await delay(2000, signal)
+  async function showMap(signal: AbortSignal) {
+    const mapView = document.querySelector('.mmv__view--map') as HTMLElement
+    const mapContainer = document.querySelector('.mmv__map-container') as HTMLElement
+    const mapMarkers = document.querySelectorAll('.mmv__map-marker')
+    const mapTarget = document.querySelector('.mmv__map-marker--target') as HTMLElement
+    const mapPopup = document.querySelector('.mmv__popup--map') as HTMLElement
 
-      // Fade out calendar then hide gate
-      animate(calPopup, { opacity: 0, y: '100%' } as any, { duration: 0.35, easing: [...EXIT_EASE] } as any)
-      await animate(calView, { opacity: 0 } as any, { duration: 0.4, easing: [...EXIT_EASE] } as any).finished
-      if (signal.aborted) return
+    if (!mapView || !mapContainer || !mapPopup) return
+
+    try {
       hideAllGates()
-
-      // ===== MAP =====
-      setActiveView('map')
+      setActiveTab('map')
 
       // Reset map state before showing
       mapContainer.style.transform = ''
@@ -759,163 +633,57 @@ const timelineGroups = [
         { duration: 0.5, easing: [...EASE] } as any,
       ).finished
       if (signal.aborted) return
-
-      await delay(2000, signal)
-
-      // Fade out map then hide gate
-      animate(mapPopup, { opacity: 0, y: '100%' } as any, { duration: 0.35, easing: [...EXIT_EASE] } as any)
-      await animate(mapView, { opacity: 0 } as any, { duration: 0.4, easing: [...EXIT_EASE] } as any).finished
-      if (signal.aborted) return
-      hideAllGates()
-
-      await delay(600, signal)
-
-      // Loop
-      runViewsAnimation(signal, true)
+      // View stays visible until scroll controller switches
     } catch (e) {
       if (e instanceof DOMException && e.name === 'AbortError') return
       throw e
     }
   }
 
-  document.addEventListener('astro:page-load', initViewsAnimation)
+  // ===== Event-driven API =====
+
+  function initViewsDemo() {
+    const mmv = document.querySelector('.mmv')
+    if (!mmv) return
+
+    mmv.addEventListener('views:show', ((e: CustomEvent) => {
+      const viewName = e.detail.view
+      if (viewName === currentView) return
+
+      // Abort any running view animation
+      if (viewAbortController) viewAbortController.abort()
+      viewAbortController = new AbortController()
+      currentView = viewName
+
+      if (viewName === 'timeline') showTimeline(viewAbortController.signal)
+      else if (viewName === 'calendar') showCalendar(viewAbortController.signal)
+      else if (viewName === 'map') showMap(viewAbortController.signal)
+    }) as EventListener)
+
+    mmv.addEventListener('views:stop', () => {
+      if (viewAbortController) viewAbortController.abort()
+      viewAbortController = null
+      currentView = null
+      hideAllGates()
+    })
+  }
+
+  document.addEventListener('astro:page-load', initViewsDemo)
 </script>
 
 <style>
   /* ── Layout ── */
   .mmv {
-    padding: 4rem 2rem 6rem;
-    max-width: 62rem;
-    margin: 0 auto;
-  }
-
-  .mmv__content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5rem;
-
-    @media (width >= 48rem) {
-      display: grid;
-      grid-template-columns: minmax(0, 22rem) auto;
-      grid-template-rows: 1fr auto auto 1fr;
-      gap: 0 4rem;
-      justify-content: center;
-    }
-  }
-
-  .mmv__text {
-    @media (width >= 48rem) {
-      grid-column: 1;
-      grid-row: 2;
-    }
-  }
-
-  .mmv__heading {
-    font-size: clamp(1.4rem, 3vw, 1.75rem);
-    font-weight: 700;
-    color: var(--color-stone-50);
-    margin-bottom: 0.75rem;
-  }
-
-  .mmv__sub {
-    font-size: 0.95rem;
-    color: var(--color-stone-400);
-    line-height: 1.55;
-    margin-bottom: 1.5rem;
-  }
-
-  .mmv__features {
-    @media (width >= 48rem) {
-      grid-column: 1;
-      grid-row: 3;
-    }
-
-    @media (width < 48rem) {
-      overflow: hidden;
-      margin-left: -2rem;
-      margin-right: -2rem;
-      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-      /* -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%); */
-    }
-  }
-
-  .mmv__features-track {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-
-    @media (width < 48rem) {
-      flex-direction: row;
-      gap: 1rem;
-    }
-  }
-
-  .mmv__feature {
-    border-radius: 12px;
-    border: 1px solid var(--color-stone-700);
-    background: transparent;
-    padding: 14px 18px;
-    transition:
-      background 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-      border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-
-    @media (width < 48rem) {
-      flex: 0 0 75%;
-      min-width: 0;
-    }
-  }
-
-  .mmv__feature--clone {
-    @media (width >= 48rem) {
-      display: none;
-    }
-  }
-
-  .mmv__feature--active {
-    border-color: var(--color-amber-500);
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, var(--color-amber-500) 12%, transparent) 0%,
-      color-mix(in oklch, var(--color-amber-500) 4%, transparent) 100%
-    );
-  }
-
-  .mmv__feature-title {
-    display: block;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-stone-200);
-    margin-bottom: 0.25rem;
-    transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-
-    .mmv__feature--active & {
-      color: var(--color-amber-400);
-    }
-  }
-
-  .mmv__feature-desc {
-    display: block;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--color-stone-500);
-    transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-
-    .mmv__feature--active & {
-      color: var(--color-stone-300);
-    }
   }
 
   /* ── Phone frame overrides ── */
-  .mmv__content :global(.phone-frame) {
+  .mmv :global(.phone-frame) {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    @media (width >= 48rem) {
-      grid-column: 2;
-      grid-row: 1 / -1;
-    }
   }
 
   /* ── Views (overlapping, absolute) ── */

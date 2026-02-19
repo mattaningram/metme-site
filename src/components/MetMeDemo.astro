@@ -2,8 +2,8 @@
 import PhoneFrame from '@components/PhoneFrame.astro'
 ---
 
-<!-- Demo Animation Section -->
-<section class="mm-demo" aria-label="How MetMe works">
+<!-- Demo Animation -->
+<div class="mm-demo">
   <PhoneFrame>
     <div class="mm-demo__prompt-container">
       <!-- Step 1: Prompt -->
@@ -127,10 +127,10 @@ import PhoneFrame from '@components/PhoneFrame.astro'
       <span class="mm-demo__saved-view">View contact</span>
     </div>
   </PhoneFrame>
-</section>
+</div>
 
 <script>
-  import { animate, stagger, inView } from 'motion'
+  import { animate, stagger } from 'motion'
 
   let abortController: AbortController | null = null
 
@@ -144,22 +144,46 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     })
   }
 
+  function resetDemoState() {
+    const prompt = document.querySelector('.mm-demo__prompt') as HTMLElement
+    const textWrap = document.querySelector('.mm-demo__text') as HTMLElement
+    const words = document.querySelectorAll('.mm-demo__word')
+    const contact = document.querySelector('.mm-demo__contact') as HTMLElement
+    const contactRows = document.querySelectorAll('.mm-demo__contact-row')
+    const deleteBtn = document.querySelector('.mm-demo__delete') as HTMLElement
+    const saveBtn = document.querySelector('.mm-demo__save') as HTMLElement
+    const saved = document.querySelector('.mm-demo__saved') as HTMLElement
+    const mic = document.querySelector('.mm-demo__mic') as HTMLElement
+
+    if (prompt) { prompt.style.display = ''; prompt.style.opacity = '0' }
+    if (textWrap) { textWrap.style.cssText = 'display: none;'; textWrap.classList.remove('mm-demo__text--scanning') }
+    if (contact) contact.style.cssText = 'display: none;'
+    if (deleteBtn) deleteBtn.style.cssText = ''
+    if (saveBtn) saveBtn.style.cssText = ''
+    if (saved) saved.style.cssText = ''
+    if (mic) mic.classList.remove('mm-demo__mic--active')
+    words.forEach((w) => { (w as HTMLElement).style.cssText = ''; (w as HTMLElement).classList.remove('mm-demo__word--highlighted') })
+    contactRows.forEach((r) => { (r as HTMLElement).style.cssText = '' })
+  }
+
   function initDemoAnimation() {
-    const demoSection = document.querySelector('.mm-demo')
-    if (demoSection) {
-      inView(
-        demoSection,
-        () => {
-          startAnimation()
-        },
-        { amount: 0.3 },
-      )
-    }
+    const demoEl = document.querySelector('.mm-demo')
+    if (!demoEl) return
+
+    demoEl.addEventListener('demo:start', () => {
+      startAnimation()
+    })
+    demoEl.addEventListener('demo:stop', () => {
+      if (abortController) abortController.abort()
+      abortController = null
+      resetDemoState()
+    })
   }
 
   function startAnimation() {
     if (abortController) abortController.abort()
     abortController = new AbortController()
+    resetDemoState()
     runDemoAnimation(abortController.signal)
   }
 
@@ -364,7 +388,6 @@ import PhoneFrame from '@components/PhoneFrame.astro'
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 4rem 2rem 6rem;
   }
 
   .mm-demo :global(.phone-frame__screen) {
