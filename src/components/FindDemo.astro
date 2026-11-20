@@ -1,0 +1,908 @@
+---
+import PhoneFrame from '@components/PhoneFrame.astro'
+import { Icon } from 'astro-icon/components'
+import { demoContacts, demoPlaces, groupContacts, initials } from '@utils/findDemoData'
+
+const views = [
+  { key: 'list', label: 'List', icon: 'list', desc: 'Group by date met, city, or company.' },
+  { key: 'map', label: 'Map', icon: 'map', desc: 'See who you met at each place.' },
+  { key: 'calendar', label: 'Calendar', icon: 'calendar', desc: 'Go back to the day you met.' },
+]
+
+const groupModes = [
+  { key: 'date', label: 'Date met' },
+  { key: 'city', label: 'City' },
+  { key: 'company', label: 'Company' },
+]
+
+const groups = groupContacts('date')
+---
+
+<div class="find">
+  <div class="find__side">
+    <slot />
+    <div class="find__tabs" role="tablist" aria-label="Ways to browse contacts">
+    {
+      views.map((view, i) => (
+        <button
+          class="find__tab"
+          type="button"
+          role="tab"
+          data-view={view.key}
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >
+          <span class="find__tab-icon">
+            <Icon name={view.icon} />
+          </span>
+          <span class="find__tab-text">
+            <span class="find__tab-label">{view.label}</span>
+            <span class="find__tab-desc">{view.desc}</span>
+          </span>
+          <span class="find__tab-progress" />
+        </button>
+      ))
+    }
+    </div>
+  </div>
+
+  <PhoneFrame>
+    <!-- List -->
+    <div class="find-view is-active" data-view="list">
+      <div class="find-groupby">
+        {
+          groupModes.map((mode, i) => (
+            <button class="find-groupby__chip" type="button" data-group={mode.key} aria-pressed={i === 0 ? 'true' : 'false'}>
+              {mode.label}
+            </button>
+          ))
+        }
+      </div>
+      <div class="find-list">
+        {
+          groups.map((group) => (
+            <>
+              <div class="find-list__header">{group.label}</div>
+              {group.contacts.map((contact) => (
+                <div class="find-person" data-id={contact.id}>
+                  <span class="find-person__avatar" style={`--hue: ${contact.hue}`}>
+                    {initials(contact.name)}
+                  </span>
+                  <span class="find-person__text">
+                    <span class="find-person__name">{contact.name}</span>
+                    <span class="find-person__sub">{contact.place}</span>
+                  </span>
+                </div>
+              ))}
+            </>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="find-view" data-view="map">
+      <svg class="find-map" viewBox="0 0 300 650" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="300" height="650" class="find-map__land"></rect>
+        <g transform="rotate(-16 150 325)">
+          <g class="find-map__street">
+            <path d="M-200 60H500M-200 130H500M-200 200H500M-200 340H500M-200 410H500M-200 550H500M-200 620H500"></path>
+            <path d="M-20 -200V850M40 -200V850M160 -200V850M220 -200V850M340 -200V850"></path>
+          </g>
+          <rect x="108" y="282" width="46" height="120" rx="8" class="find-map__park"></rect>
+          <g class="find-map__avenue">
+            <path d="M-200 270H500M-200 480H500M100 -200V850M280 -200V850"></path>
+          </g>
+        </g>
+        <path d="M-10 470C40 455 70 500 96 548S150 640 190 660H-10Z" class="find-map__water"></path>
+      </svg>
+      {
+        demoPlaces.map((place, i) => (
+          <button
+            class="find-pin"
+            type="button"
+            data-place={place.name}
+            style={`left: ${place.x}%; top: ${place.y}%; --i: ${i}`}
+            aria-label={place.name}
+          >
+            <span class="find-pin__dot">{demoContacts.filter((c) => c.place === place.name).length}</span>
+          </button>
+        ))
+      }
+      <div class="find-card" data-map-card>
+        <p class="find-card__title"></p>
+        <div class="find-card__people"></div>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="find-view" data-view="calendar">
+      <p class="find-cal__month"></p>
+      <div class="find-cal__weekdays">
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day) => <span>{day}</span>)}
+      </div>
+      <div class="find-cal__grid"></div>
+      <div class="find-card find-card--day is-on" data-day-card>
+        <p class="find-card__title"></p>
+        <div class="find-card__people"></div>
+      </div>
+    </div>
+
+    <div class="find-switch" style="--index: 0">
+      <span class="find-switch__thumb"></span>
+      {
+        views.map((view, i) => (
+          <button
+            class="find-switch__item"
+            type="button"
+            data-view={view.key}
+            aria-label={view.label}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            <Icon name={view.icon} />
+          </button>
+        ))
+      }
+    </div>
+  </PhoneFrame>
+</div>
+
+<script>
+  import { animate, inView, stagger } from 'motion'
+  import {
+    demoContacts,
+    demoMonth,
+    demoPlaces,
+    groupContacts,
+    initials,
+    type DemoContact,
+    type GroupMode,
+  } from '@utils/findDemoData'
+
+  const VIEWS = ['list', 'map', 'calendar'] as const
+  type View = (typeof VIEWS)[number]
+  const EASE = [0.22, 1, 0.36, 1] as const
+
+  function personRow(contact: DemoContact, sub: string) {
+    const row = document.createElement('div')
+    row.className = 'find-person'
+    row.innerHTML = `<span class="find-person__avatar" style="--hue: ${contact.hue}">${initials(contact.name)}</span>
+      <span class="find-person__text"><span class="find-person__name">${contact.name}</span><span class="find-person__sub">${sub}</span></span>`
+    return row
+  }
+
+  function initFind(root: HTMLElement) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('.find__tab')]
+    const switchEl = root.querySelector<HTMLElement>('.find-switch')!
+    const switchItems = [...root.querySelectorAll<HTMLButtonElement>('.find-switch__item')]
+    const viewEls = [...root.querySelectorAll<HTMLElement>('.find-view')]
+    const list = root.querySelector<HTMLElement>('.find-list')!
+    const groupChips = [...root.querySelectorAll<HTMLButtonElement>('.find-groupby__chip')]
+    const pins = [...root.querySelectorAll<HTMLButtonElement>('.find-pin')]
+    const mapCard = root.querySelector<HTMLElement>('[data-map-card]')!
+    const dayCard = root.querySelector<HTMLElement>('[data-day-card]')!
+    const calGrid = root.querySelector<HTMLElement>('.find-cal__grid')!
+    const calMonth = root.querySelector<HTMLElement>('.find-cal__month')!
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const month = demoMonth()
+    const rowsById = new Map(
+      [...list.querySelectorAll<HTMLElement>('.find-person')].map((row) => [row.dataset.id!, row]),
+    )
+
+    let current: View = 'list'
+    let autoplay = !reducedMotion
+    let visible = false
+    let timers: ReturnType<typeof setTimeout>[] = []
+
+    /* ── List ── */
+    function setGroup(mode: GroupMode, animated: boolean) {
+      groupChips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip.dataset.group === mode)))
+      const before = new Map([...rowsById].map(([id, row]) => [id, row.getBoundingClientRect().top]))
+      const fragment = document.createDocumentFragment()
+      const headers: HTMLElement[] = []
+      for (const group of groupContacts(mode)) {
+        const header = document.createElement('div')
+        header.className = 'find-list__header'
+        header.textContent = group.label
+        headers.push(header)
+        fragment.append(header, ...group.contacts.map((contact) => rowsById.get(contact.id)!))
+      }
+      list.replaceChildren(fragment)
+      if (!animated || reducedMotion) return
+      rowsById.forEach((row, id) => {
+        const delta = before.get(id)! - row.getBoundingClientRect().top
+        if (delta) animate(row, { y: [delta, 0] }, { duration: 0.6, ease: EASE })
+      })
+      animate(headers, { opacity: [0, 1] }, { duration: 0.4, delay: 0.15 })
+    }
+
+    /* ── Map ── */
+    function fillCard(card: HTMLElement, title: string, contacts: DemoContact[], sub: (c: DemoContact) => string) {
+      card.querySelector('.find-card__title')!.textContent = title
+      const rows = contacts.map((contact) => personRow(contact, sub(contact)))
+      card.querySelector('.find-card__people')!.replaceChildren(...rows)
+      if (!reducedMotion) {
+        animate(rows, { opacity: [0, 1], y: [8, 0] }, { duration: 0.35, delay: stagger(0.06), ease: EASE })
+      }
+    }
+
+    function selectPlace(name: string | null) {
+      pins.forEach((pin) => pin.classList.toggle('is-selected', pin.dataset.place === name))
+      mapCard.classList.toggle('is-on', Boolean(name))
+      if (!name) return
+      fillCard(
+        mapCard,
+        name,
+        demoContacts.filter((contact) => contact.place === name),
+        (contact) => month.dayLabel(contact.day),
+      )
+    }
+
+    /* ── Calendar ── */
+    calMonth.textContent = month.label
+    const dayEls = new Map<number, HTMLElement>()
+    const metDays = new Set(demoContacts.map((contact) => contact.day))
+    for (let i = 0; i < month.offset; i++) calGrid.append(document.createElement('span'))
+    for (let day = 1; day <= month.days; day++) {
+      const el = document.createElement(metDays.has(day) ? 'button' : 'span')
+      el.className = 'find-cal__day'
+      el.textContent = String(day)
+      if (el instanceof HTMLButtonElement) {
+        el.type = 'button'
+        el.classList.add('has-met')
+        el.addEventListener('click', () => {
+          stopAutoplay()
+          selectDay(day)
+        })
+        dayEls.set(day, el)
+      }
+      calGrid.append(el)
+    }
+
+    function selectDay(day: number) {
+      dayEls.forEach((el, key) => el.classList.toggle('is-selected', key === day))
+      fillCard(
+        dayCard,
+        month.dayLabel(day),
+        demoContacts.filter((contact) => contact.day === day),
+        (contact) => contact.place,
+      )
+    }
+
+    /* ── Views ── */
+    function clearTimers() {
+      timers.forEach(clearTimeout)
+      timers = []
+    }
+
+    function later(ms: number, fn: () => void) {
+      timers.push(setTimeout(fn, ms))
+    }
+
+    function enter(view: View) {
+      clearTimers()
+      if (view === 'list') {
+        setGroup('date', false)
+        if (autoplay) {
+          later(2400, () => setGroup('city', true))
+          later(4700, () => setGroup('company', true))
+        }
+      }
+      if (view === 'map') {
+        selectPlace(null)
+        later(700, () => selectPlace(demoPlaces[0].name))
+        if (autoplay) {
+          later(3000, () => selectPlace(demoPlaces[1].name))
+          later(5000, () => selectPlace(demoPlaces[2].name))
+        }
+      }
+      if (view === 'calendar') {
+        selectDay(27)
+        if (autoplay) {
+          later(2600, () => selectDay(19))
+          later(4700, () => selectDay(14))
+        }
+      }
+    }
+
+    function setView(view: View) {
+      current = view
+      const index = VIEWS.indexOf(view)
+      switchEl.style.setProperty('--index', String(index))
+      tabs.forEach((tab) => {
+        const active = tab.dataset.view === view
+        tab.setAttribute('aria-selected', String(active))
+        tab.classList.remove('is-timing')
+        if (active && autoplay && visible) {
+          void tab.offsetWidth
+          tab.classList.add('is-timing')
+        }
+      })
+      switchItems.forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.view === view)))
+      viewEls.forEach((el) => el.classList.toggle('is-active', el.dataset.view === view))
+      enter(view)
+    }
+
+    function stopAutoplay() {
+      autoplay = false
+      clearTimers()
+      tabs.forEach((tab) => tab.classList.remove('is-timing'))
+    }
+
+    ;[...tabs, ...switchItems].forEach((button) => {
+      button.addEventListener('click', () => {
+        stopAutoplay()
+        setView(button.dataset.view as View)
+      })
+    })
+
+    tabs.forEach((tab) => {
+      tab.querySelector('.find__tab-progress')!.addEventListener('animationend', () => {
+        if (autoplay) setView(VIEWS[(VIEWS.indexOf(current) + 1) % VIEWS.length])
+      })
+    })
+
+    groupChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        stopAutoplay()
+        setGroup(chip.dataset.group as GroupMode, true)
+      })
+    })
+
+    pins.forEach((pin) => {
+      pin.addEventListener('click', () => {
+        stopAutoplay()
+        selectPlace(pin.dataset.place!)
+      })
+    })
+
+    setGroup('date', false)
+    selectDay(27)
+
+    inView(
+      root,
+      () => {
+        visible = true
+        root.classList.remove('is-paused')
+        if (autoplay) setView(current)
+        return () => {
+          visible = false
+          root.classList.add('is-paused')
+          if (autoplay) clearTimers()
+        }
+      },
+      { amount: 0.3 },
+    )
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.find').forEach(initFind)
+  })
+</script>
+
+<style is:global>
+  .find {
+    display: grid;
+    justify-items: center;
+    gap: 2rem;
+
+    @media (width >= 56rem) {
+      grid-template-columns: minmax(0, 26rem) auto;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+    }
+  }
+
+  /* ── Tabs beside the phone ── */
+  .find__side {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+    max-width: 26rem;
+  }
+
+  .find__tabs {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .find__tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 1rem;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
+
+    &:hover {
+      background: color-mix(in oklch, var(--color-stone-900) 60%, transparent);
+    }
+
+    &[aria-selected='true'] {
+      background: var(--color-stone-900);
+      border-color: var(--color-stone-800);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-amber-400);
+      outline-offset: 2px;
+    }
+  }
+
+  .find__tab-icon {
+    display: grid;
+    place-content: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--color-stone-900);
+    color: var(--color-stone-500);
+    transition:
+      color 0.3s,
+      background-color 0.3s;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    [aria-selected='true'] & {
+      background: color-mix(in oklch, var(--color-amber-500) 14%, transparent);
+      color: var(--color-amber-400);
+    }
+  }
+
+  .find__tab-text {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .find__tab-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-stone-300);
+
+    [aria-selected='true'] & {
+      color: var(--color-stone-50);
+    }
+  }
+
+  .find__tab-desc {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: var(--color-stone-500);
+
+    [aria-selected='true'] & {
+      color: var(--color-stone-400);
+    }
+  }
+
+  .find__tab-progress {
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--color-amber-500);
+    transform: scaleX(0);
+    transform-origin: left;
+
+    .is-timing & {
+      animation: find-progress 7s linear forwards;
+    }
+
+    .is-paused & {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes find-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* ── Phone ── */
+  .find .phone-frame__screen {
+    pointer-events: auto;
+  }
+
+  .find-view {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    scale: 0.97;
+    visibility: hidden;
+    transition:
+      opacity 0.35s var(--ease-out-quart),
+      scale 0.45s var(--ease-out-quart),
+      visibility 0s 0.35s;
+
+    &.is-active {
+      opacity: 1;
+      scale: 1;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+  }
+
+  .find-view[data-view='list'],
+  .find-view[data-view='calendar'] {
+    padding-top: 52px;
+
+    @media (width >= 40rem) {
+      padding-top: 58px;
+    }
+  }
+
+  /* Shared person row */
+  .find-person {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    padding: 0 18px;
+
+    @media (width >= 40rem) {
+      height: 46px;
+      padding: 0 22px;
+    }
+  }
+
+  .find-person__avatar {
+    display: grid;
+    place-content: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: oklch(36% 0.07 var(--hue));
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: oklch(90% 0.06 var(--hue));
+  }
+
+  .find-person__text {
+    display: grid;
+    min-width: 0;
+  }
+
+  .find-person__name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-stone-100);
+  }
+
+  .find-person__sub {
+    font-size: 0.7rem;
+    line-height: 1.25;
+    color: var(--color-stone-500);
+  }
+
+  /* List */
+  .find-groupby {
+    display: flex;
+    gap: 6px;
+    padding: 0 18px 8px;
+
+    @media (width >= 40rem) {
+      padding-inline: 22px;
+    }
+  }
+
+  .find-groupby__chip {
+    padding: 4px 10px;
+    border: 1px solid var(--color-stone-700);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-stone-400);
+    cursor: pointer;
+    transition:
+      color 0.25s,
+      border-color 0.25s,
+      background-color 0.25s;
+
+    &[aria-pressed='true'] {
+      background: var(--color-amber-500);
+      border-color: var(--color-amber-500);
+      color: var(--color-stone-950);
+    }
+  }
+
+  .find-list__header {
+    padding: 10px 18px 4px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-amber-500);
+
+    @media (width >= 40rem) {
+      padding-inline: 22px;
+    }
+  }
+
+  /* Map */
+  .find-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .find-map__land {
+    fill: var(--color-stone-900);
+  }
+
+  .find-map__street {
+    fill: none;
+    stroke: var(--color-stone-800);
+    stroke-width: 5;
+  }
+
+  .find-map__avenue {
+    fill: none;
+    stroke: var(--color-stone-700);
+    stroke-width: 9;
+  }
+
+  .find-map__park {
+    fill: oklch(31% 0.045 150);
+  }
+
+  .find-map__water {
+    fill: oklch(30% 0.04 235);
+  }
+
+  .find-pin {
+    position: absolute;
+    display: grid;
+    place-content: center;
+    width: 44px;
+    height: 44px;
+    translate: -50% -50%;
+    cursor: pointer;
+    scale: 0;
+    transition: scale 0.5s var(--ease-out-back);
+    transition-delay: calc(var(--i) * 90ms + 150ms);
+
+    .find-view.is-active & {
+      scale: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-amber-200);
+      border-radius: 50%;
+    }
+  }
+
+  .find-pin__dot {
+    display: grid;
+    place-content: center;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--color-stone-950);
+    border-radius: 50%;
+    background: var(--color-amber-500);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-stone-950);
+    transition:
+      scale 0.35s var(--ease-out-back),
+      background-color 0.25s;
+
+    .is-selected & {
+      scale: 1.25;
+      background: var(--color-amber-300);
+      animation: find-pin 1.6s ease-out infinite;
+    }
+  }
+
+  @keyframes find-pin {
+    from {
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-amber-400) 55%, transparent);
+    }
+    to {
+      box-shadow: 0 0 0 16px color-mix(in oklch, var(--color-amber-400) 0%, transparent);
+    }
+  }
+
+  /* Card used by the map and the calendar */
+  .find-card {
+    position: absolute;
+    inset: auto 10px 76px;
+    padding: 12px 0 6px;
+    border: 1px solid var(--color-stone-700);
+    border-radius: 20px;
+    background: color-mix(in oklch, var(--color-stone-900) 92%, transparent);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    translate: 0 16px;
+    transition:
+      opacity 0.35s var(--ease-out-quart),
+      translate 0.45s var(--ease-out-quart);
+
+    &.is-on {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    .find-person {
+      padding-inline: 14px;
+    }
+
+    @media (width >= 40rem) {
+      inset-block-end: 84px;
+    }
+  }
+
+  .find-card--day {
+    position: static;
+    margin: 14px 10px 0;
+    min-height: 122px;
+  }
+
+  .find-card__title {
+    padding: 0 14px 4px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-amber-500);
+  }
+
+  /* Calendar */
+  .find-cal__month {
+    padding: 0 20px 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-stone-50);
+  }
+
+  .find-cal__weekdays,
+  .find-cal__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    padding: 0 12px;
+  }
+
+  .find-cal__weekdays {
+    padding-bottom: 4px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--color-stone-600);
+  }
+
+  .find-cal__grid {
+    row-gap: 2px;
+  }
+
+  .find-cal__day {
+    position: relative;
+    display: grid;
+    place-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-stone-500);
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      scale 0.3s var(--ease-out-back);
+
+    &.has-met {
+      color: var(--color-stone-100);
+      cursor: pointer;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 3px;
+        width: 4px;
+        height: 4px;
+        margin-inline: auto;
+        border-radius: 50%;
+        background: var(--color-amber-500);
+        transition: opacity 0.2s;
+      }
+    }
+
+    &.is-selected {
+      background: var(--color-amber-500);
+      color: var(--color-stone-950);
+      font-weight: 700;
+      scale: 1.08;
+
+      &::after {
+        opacity: 0;
+      }
+    }
+
+    @media (width >= 40rem) {
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  /* View switch inside the phone */
+  .find-switch {
+    position: absolute;
+    inset: auto 0 22px;
+    display: grid;
+    grid-template-columns: repeat(3, 44px);
+    width: max-content;
+    margin-inline: auto;
+    padding: 3px;
+    border: 1px solid var(--color-stone-700);
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--color-stone-800) 85%, transparent);
+    backdrop-filter: blur(12px);
+
+    @media (width >= 40rem) {
+      inset-block-end: 26px;
+    }
+  }
+
+  .find-switch__thumb {
+    position: absolute;
+    inset: 3px auto 3px 3px;
+    width: 44px;
+    border-radius: 999px;
+    background: var(--color-stone-600);
+    translate: calc(var(--index) * 100%) 0;
+    transition: translate 0.45s var(--ease-out-quart);
+  }
+
+  .find-switch__item {
+    position: relative;
+    display: grid;
+    place-content: center;
+    height: 34px;
+    color: var(--color-stone-400);
+    cursor: pointer;
+    transition: color 0.3s;
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &[aria-pressed='true'] {
+      color: var(--color-stone-50);
+    }
+  }
+
+  .find-view[data-view='list']::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 110px;
+    background: linear-gradient(transparent, var(--color-stone-950) 75%);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .find-view,
+    .find-pin,
+    .find-card,
+    .find-switch__thumb {
+      transition: none;
+    }
+
+    .is-selected .find-pin__dot {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,251 @@
+---
+import { Icon } from 'astro-icon/components'
+
+const chips = [
+  { label: 'Name', value: 'Jo Park' },
+  { label: 'Title', value: 'Baker' },
+  { label: 'Company', value: 'Crumb' },
+]
+---
+
+<div class="off">
+  <div class="off__setting">
+    <span class="off__plane">
+      <Icon name="airplane" />
+    </span>
+    <span class="off__setting-label" id="off-label">Airplane Mode</span>
+    <button class="off__switch" type="button" role="switch" aria-checked="false" aria-labelledby="off-label">
+      <span class="off__knob"></span>
+    </button>
+  </div>
+  <div class="off__demo">
+    <p class="off__text">Met Jo Park, baker at Crumb</p>
+    <div class="off__chips">
+      {
+        chips.map((chip) => (
+          <span class="off__chip">
+            <span class="off__chip-label">{chip.label}</span>
+            {chip.value}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+  <p class="off__status">
+    <span class="off__dot"></span>
+    <span data-status>Online</span>
+  </p>
+</div>
+
+<script>
+  import { animate, inView, stagger } from 'motion'
+
+  function initOffline(root: HTMLElement) {
+    const toggle = root.querySelector<HTMLButtonElement>('.off__switch')!
+    const text = root.querySelector<HTMLElement>('.off__text')!
+    const chips = root.querySelectorAll<HTMLElement>('.off__chip')
+    const status = root.querySelector<HTMLElement>('[data-status]')!
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let touched = false
+
+    function set(offline: boolean) {
+      toggle.setAttribute('aria-checked', String(offline))
+      root.classList.toggle('is-offline', offline)
+      status.textContent = offline ? 'No connection. Still works.' : 'Online'
+      if (reducedMotion) return
+      text.classList.remove('is-scanning')
+      void text.offsetWidth
+      text.classList.add('is-scanning')
+      animate(
+        chips,
+        { opacity: [0, 1], scale: [0.85, 1], y: [6, 0] },
+        { duration: 0.4, delay: stagger(0.09, { startDelay: 0.75 }), ease: [0.22, 1, 0.36, 1] },
+      )
+    }
+
+    toggle.addEventListener('click', () => {
+      touched = true
+      set(toggle.getAttribute('aria-checked') !== 'true')
+    })
+
+    if (reducedMotion) return
+    const stopWatching = inView(
+      root,
+      () => {
+        stopWatching()
+        setTimeout(() => {
+          if (!touched) set(true)
+        }, 1200)
+      },
+      { amount: 0.6 },
+    )
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.off').forEach(initOffline)
+  })
+</script>
+
+<style>
+  .off {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border: 1px solid var(--color-stone-800);
+    border-radius: 28px;
+    background: var(--color-stone-900);
+  }
+
+  .off__setting {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 16px;
+    background: var(--color-stone-800);
+  }
+
+  .off__plane {
+    display: grid;
+    place-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--color-amber-500);
+    color: #fff;
+  }
+
+  .off__plane :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .off__setting-label {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-stone-100);
+  }
+
+  .off__switch {
+    width: 52px;
+    height: 32px;
+    padding: 2px;
+    border-radius: 999px;
+    background: var(--color-stone-600);
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &[aria-checked='true'] {
+      background: var(--color-amber-500);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-amber-300);
+      outline-offset: 2px;
+    }
+  }
+
+  .off__knob {
+    display: block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 6px oklch(0% 0 0 / 0.3);
+    transition: translate 0.35s var(--ease-out-back);
+
+    [aria-checked='true'] & {
+      translate: 20px 0;
+    }
+  }
+
+  .off__demo {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0 0.3rem;
+  }
+
+  .off__text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-amber-400);
+
+    &.is-scanning {
+      background: linear-gradient(
+        100deg,
+        var(--color-amber-400) 0%,
+        var(--color-amber-400) 35%,
+        var(--color-amber-50) 50%,
+        var(--color-amber-400) 65%,
+        var(--color-amber-400) 100%
+      );
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: off-scan 0.8s ease-in-out;
+    }
+  }
+
+  @keyframes off-scan {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0% 0;
+    }
+  }
+
+  .off__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .off__chip {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px dashed var(--color-stone-700);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-stone-100);
+  }
+
+  .off__chip-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-stone-500);
+  }
+
+  .off__status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--color-stone-500);
+    transition: color 0.3s;
+
+    .is-offline & {
+      color: var(--color-amber-300);
+    }
+  }
+
+  .off__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: oklch(70% 0.15 150);
+    transition: background-color 0.3s;
+
+    .is-offline & {
+      background: var(--color-amber-400);
+    }
+  }
+</style>

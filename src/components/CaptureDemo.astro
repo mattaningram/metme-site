@@ -1,0 +1,795 @@
+---
+import PhoneFrame from '@components/PhoneFrame.astro'
+import { Icon } from 'astro-icon/components'
+
+const samples = [
+  {
+    label: 'Conference',
+    mode: 'type',
+    text: 'Met Sarah Chen, a designer at Lumen Studio. sarah@lumen.studio 415-555-0134',
+  },
+  {
+    label: 'Wedding',
+    mode: 'voice',
+    text: 'Yesterday I met Marcus Rivera, a photographer from Rivera Foto, 512-555-0178',
+  },
+  {
+    label: 'Coffee shop',
+    mode: 'type',
+    text: 'Priya Sharma, engineer at Harbor Labs, priya@harborlabs.dev',
+  },
+]
+
+const rows = [
+  { key: 'name', label: 'Name' },
+  { key: 'company', label: 'Company' },
+  { key: 'title', label: 'Title' },
+  { key: 'phone', label: 'Phone' },
+  { key: 'email', label: 'Email' },
+]
+---
+
+<div class="cap" data-samples={JSON.stringify(samples)}>
+  <PhoneFrame>
+    <div class="cap__input">
+      <div class="cap__mirror" aria-hidden="true"></div>
+      <textarea
+        class="cap__field"
+        placeholder="Who did you meet?"
+        maxlength="140"
+        rows="1"
+        aria-label="Describe someone you met"
+        spellcheck="false"
+        autocomplete="off"></textarea>
+    </div>
+
+    <div class="cap__rows">
+      {
+        rows.map((row) => (
+          <div class="cap__row" data-row={row.key}>
+            <div class="cap__row-inner">
+              <span class="cap__row-label">{row.label}</span>
+              <span class="cap__row-value" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="cap__bar">
+      <div class="cap__pill">
+        <span class="cap__pill-item" data-when-item>
+          <Icon name="calendar" />
+          <span data-when>Today</span>
+        </span>
+        <span class="cap__pill-divider"></span>
+        <span class="cap__pill-item">
+          <Icon name="pin" />
+          Here
+        </span>
+      </div>
+      <div class="cap__actions">
+        <button class="cap__discard" type="button" aria-label="Clear" tabindex="-1">
+          <Icon name="trash" />
+        </button>
+        <div class="cap__mic">
+          <Icon name="mic" />
+        </div>
+        <button class="cap__save" type="button" aria-label="Save contact" tabindex="-1">
+          <Icon name="check" />
+        </button>
+      </div>
+    </div>
+
+    <div class="cap__toast" role="status">
+      <div class="cap__toast-icon">
+        <Icon name="check" />
+      </div>
+      <p class="cap__toast-name"></p>
+      <p class="cap__toast-detail"></p>
+    </div>
+  </PhoneFrame>
+
+  <div class="cap__try">
+    <span class="cap__try-label">Try an example, or type your own</span>
+    <div class="cap__chips">
+      {
+        samples.map((sample, i) => (
+          <button class="cap__chip" type="button" data-sample={i} aria-pressed="false">
+            <Icon name={sample.mode === 'voice' ? 'mic' : 'keyboard'} />
+            {sample.label}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  import { inView } from 'motion'
+  import { parseDemo, type DemoFieldKey, type DemoParse } from '@utils/parseDemo'
+
+  type Sample = { label: string; mode: 'type' | 'voice'; text: string }
+
+  function wait(ms: number, signal: AbortSignal): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (signal.aborted) return reject(new DOMException('Aborted', 'AbortError'))
+      const id = setTimeout(resolve, ms)
+      signal.addEventListener('abort', () => {
+        clearTimeout(id)
+        reject(new DOMException('Aborted', 'AbortError'))
+      })
+    })
+  }
+
+  function escapeHtml(value: string) {
+    return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  }
+
+  function initCapture(root: HTMLElement) {
+    const samples: Sample[] = JSON.parse(root.dataset.samples ?? '[]')
+    const field = root.querySelector<HTMLTextAreaElement>('.cap__field')!
+    const mirror = root.querySelector<HTMLElement>('.cap__mirror')!
+    const rowEls = [...root.querySelectorAll<HTMLElement>('.cap__row')]
+    const whenEl = root.querySelector<HTMLElement>('[data-when]')!
+    const whenItem = root.querySelector<HTMLElement>('[data-when-item]')!
+    const mic = root.querySelector<HTMLElement>('.cap__mic')!
+    const save = root.querySelector<HTMLButtonElement>('.cap__save')!
+    const discard = root.querySelector<HTMLButtonElement>('.cap__discard')!
+    const toast = root.querySelector<HTMLElement>('.cap__toast')!
+    const toastName = root.querySelector<HTMLElement>('.cap__toast-name')!
+    const toastDetail = root.querySelector<HTMLElement>('.cap__toast-detail')!
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.cap__chip')]
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    let controller: AbortController | null = null
+    let userMode = false
+    let parsed: DemoParse = parseDemo('')
+    let toastTimer: ReturnType<typeof setTimeout> | undefined
+
+    function setChip(index: number) {
+      chips.forEach((chip, i) => chip.setAttribute('aria-pressed', String(i === index)))
+    }
+
+    function renderText(text: string, reveal: boolean) {
+      if (field.value !== text) field.value = text
+      let html = ''
+      let cursor = 0
+      if (reveal) {
+        for (const range of parsed.ranges) {
+          html += escapeHtml(text.slice(cursor, range.start))
+          html += `<mark data-key="${range.key}">${escapeHtml(text.slice(range.start, range.end))}</mark>`
+          cursor = range.end
+        }
+      }
+      html += escapeHtml(text.slice(cursor))
+      // Trailing zero-width space keeps the last line's height when the text ends in a newline
+      mirror.innerHTML = html + '​'
+    }
+
+    function renderRows(reveal: boolean, stagger: boolean) {
+      let shown = 0
+      rowEls.forEach((row) => {
+        const value = reveal ? parsed.fields[row.dataset.row as DemoFieldKey] : undefined
+        if (value) {
+          row.querySelector('.cap__row-value')!.textContent = value
+          row.style.transitionDelay = stagger ? `${shown * 70}ms` : '0ms'
+          shown++
+        } else {
+          row.style.transitionDelay = '0ms'
+        }
+        row.classList.toggle('is-on', Boolean(value))
+      })
+      const when = reveal ? parsed.when : 'Today'
+      if (whenEl.textContent !== when) {
+        whenEl.textContent = when
+        whenItem.classList.remove('is-changed')
+        void whenItem.offsetWidth
+        if (when !== 'Today') whenItem.classList.add('is-changed')
+      }
+      const ready = reveal && Object.keys(parsed.fields).length > 0
+      save.classList.toggle('is-ready', ready)
+      discard.classList.toggle('is-ready', field.value.length > 0)
+      save.tabIndex = ready && userMode ? 0 : -1
+      discard.tabIndex = field.value.length > 0 && userMode ? 0 : -1
+    }
+
+    function show(text: string, reveal: boolean, stagger = false) {
+      if (reveal) parsed = parseDemo(text)
+      renderText(text, reveal)
+      renderRows(reveal, stagger)
+    }
+
+    function clear() {
+      parsed = parseDemo('')
+      mirror.classList.remove('is-scanning', 'is-instant')
+      mic.classList.remove('is-live')
+      show('', false)
+    }
+
+    function showToast() {
+      const { name, title, company, phone, email } = parsed.fields
+      toastName.textContent = name ? `${name} saved` : 'Contact saved'
+      const role = title && company ? `${title} at ${company}` : title || company
+      toastDetail.textContent = role || phone || email || ''
+      toast.classList.add('is-on')
+    }
+
+    function hideToast() {
+      toast.classList.remove('is-on')
+    }
+
+    async function play(sample: Sample, signal: AbortSignal) {
+      clear()
+      hideToast()
+      await wait(500, signal)
+
+      if (sample.mode === 'voice') {
+        mic.classList.add('is-live')
+        await wait(600, signal)
+        const words = sample.text.split(' ')
+        for (let i = 1; i <= words.length; i++) {
+          renderText(words.slice(0, i).join(' '), false)
+          await wait(130 + Math.random() * 90, signal)
+        }
+        await wait(350, signal)
+        mic.classList.remove('is-live')
+      } else {
+        for (let i = 1; i <= sample.text.length; i++) {
+          renderText(sample.text.slice(0, i), false)
+          await wait(sample.text[i - 1] === ' ' ? 55 : 22 + Math.random() * 26, signal)
+        }
+        await wait(250, signal)
+      }
+
+      discard.classList.add('is-ready')
+      mirror.classList.add('is-scanning')
+      await wait(1000, signal)
+      mirror.classList.remove('is-scanning')
+      show(sample.text, true, true)
+    }
+
+    async function loop(signal: AbortSignal, startAt = 0) {
+      try {
+        for (let i = startAt; ; i = (i + 1) % samples.length) {
+          setChip(i)
+          await play(samples[i], signal)
+          await wait(2600, signal)
+          save.classList.add('is-tap')
+          await wait(220, signal)
+          save.classList.remove('is-tap')
+          showToast()
+          await wait(350, signal)
+          clear()
+          await wait(1900, signal)
+          hideToast()
+          await wait(500, signal)
+        }
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) throw error
+      }
+    }
+
+    function stop() {
+      controller?.abort()
+      controller = null
+      mirror.classList.remove('is-scanning')
+      mic.classList.remove('is-live')
+      save.classList.remove('is-tap')
+    }
+
+    function start(index = 0) {
+      stop()
+      userMode = false
+      controller = new AbortController()
+      loop(controller.signal, index)
+    }
+
+    function takeOver() {
+      if (userMode) return
+      stop()
+      userMode = true
+      setChip(-1)
+      hideToast()
+      clear()
+    }
+
+    field.addEventListener('focus', takeOver)
+
+    field.addEventListener('input', () => {
+      takeOver()
+      mirror.classList.add('is-instant')
+      show(field.value.replace(/\n/g, ' '), true)
+    })
+
+    save.addEventListener('click', () => {
+      if (!userMode || !save.classList.contains('is-ready')) return
+      clearTimeout(toastTimer)
+      showToast()
+      clear()
+      field.blur()
+      toastTimer = setTimeout(hideToast, 2200)
+    })
+
+    discard.addEventListener('click', () => {
+      if (!userMode) return
+      clear()
+      field.focus()
+    })
+
+    chips.forEach((chip, index) => {
+      chip.addEventListener('click', () => {
+        clearTimeout(toastTimer)
+        field.blur()
+        if (reducedMotion) {
+          userMode = false
+          setChip(index)
+          hideToast()
+          show(samples[index].text, true)
+          return
+        }
+        start(index)
+      })
+    })
+
+    if (reducedMotion) {
+      setChip(0)
+      show(samples[0].text, true)
+      return
+    }
+
+    inView(
+      root,
+      () => {
+        if (userMode) return
+        start()
+        return () => {
+          if (!userMode) stop()
+        }
+      },
+      { amount: 0.35 },
+    )
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.cap').forEach(initCapture)
+  })
+</script>
+
+<style>
+  .cap {
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+  }
+
+  .cap :global(.phone-frame__screen) {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 56px 0 0;
+
+    @media (width >= 40rem) {
+      padding-top: 64px;
+    }
+  }
+
+  /* ── Input: a transparent textarea stacked on a mirror that draws the text ── */
+  .cap__input {
+    position: relative;
+    margin: 0 22px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.5;
+
+    @media (width >= 40rem) {
+      margin: 0 26px;
+      font-size: 1.2rem;
+    }
+  }
+
+  .cap__mirror,
+  .cap__field {
+    font: inherit;
+    letter-spacing: inherit;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+
+  .cap__mirror {
+    /* Four lines, so the field keeps its size under the pointer when it is cleared */
+    min-height: 6em;
+    color: var(--color-amber-400);
+  }
+
+  .cap__mirror :global(mark) {
+    background: transparent;
+    color: inherit;
+    border-radius: 3px;
+    animation: cap-mark 0.5s var(--ease-out-quart) forwards;
+  }
+
+  @keyframes cap-mark {
+    to {
+      color: var(--color-amber-50);
+      background: color-mix(in oklch, var(--color-amber-500) 22%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-amber-500) 22%, transparent);
+    }
+  }
+
+  .cap__mirror.is-scanning {
+    background: linear-gradient(
+      100deg,
+      var(--color-amber-400) 0%,
+      var(--color-amber-400) 35%,
+      var(--color-amber-50) 50%,
+      var(--color-amber-400) 65%,
+      var(--color-amber-400) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: cap-scan 1s ease-in-out;
+  }
+
+  @keyframes cap-scan {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0% 0;
+    }
+  }
+
+  .cap__field {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    overflow: hidden;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: transparent;
+    caret-color: var(--color-amber-300);
+
+    &::placeholder {
+      color: color-mix(in oklch, var(--color-amber-500) 80%, transparent);
+    }
+  }
+
+  /* ── Parsed rows ── */
+  .cap__rows {
+    margin-top: auto;
+  }
+
+  .cap__row {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+      grid-template-rows 0.35s var(--ease-out-quart),
+      opacity 0.35s var(--ease-out-quart),
+      transform 0.35s var(--ease-out-quart);
+
+    &.is-on {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .cap__row-inner {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    border-bottom: 1px dashed color-mix(in oklch, var(--color-stone-800) 50%, transparent);
+
+    > * {
+      padding-block: 8px;
+    }
+  }
+
+  .cap__row-label {
+    flex: none;
+    width: 60px;
+    font-size: 0.65rem;
+    color: var(--color-stone-500);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    @media (width >= 40rem) {
+      width: 70px;
+      font-size: 0.7rem;
+    }
+  }
+
+  .cap__row-value {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-stone-100);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media (width >= 40rem) {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* ── Bottom bar ── */
+  .cap__bar {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: 16px 20px 24px;
+
+    @media (width >= 40rem) {
+      padding: 18px 24px 28px;
+    }
+  }
+
+  .cap__pill {
+    display: flex;
+    background: var(--color-stone-800);
+    border: 1px solid var(--color-stone-600);
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .cap__pill-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-stone-400);
+
+    &.is-changed {
+      animation: cap-pill 1.6s var(--ease-out-quart);
+    }
+  }
+
+  .cap__pill-item :global(svg) {
+    width: 13px;
+    height: 13px;
+  }
+
+  @keyframes cap-pill {
+    0%,
+    60% {
+      color: var(--color-amber-300);
+    }
+  }
+
+  .cap__pill-divider {
+    border-left: 1px dashed var(--color-stone-600);
+  }
+
+  .cap__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .cap__discard,
+  .cap__save {
+    display: grid;
+    place-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    opacity: 0;
+    scale: 0.8;
+    pointer-events: none;
+    cursor: pointer;
+    transition:
+      opacity 0.3s var(--ease-out-quart),
+      scale 0.3s var(--ease-out-back),
+      background-color 0.2s;
+
+    &.is-ready {
+      opacity: 1;
+      scale: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .cap__discard :global(svg),
+  .cap__save :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .cap__discard {
+    background: oklch(25% 0.05 25);
+    border: 1px solid oklch(35% 0.08 25);
+    color: oklch(60% 0.15 25);
+  }
+
+  .cap__save {
+    background: color-mix(in oklch, var(--color-amber-500) 10%, transparent);
+    border: 1px solid var(--color-amber-500);
+    color: var(--color-stone-50);
+
+    &:hover,
+    &.is-tap {
+      background: color-mix(in oklch, var(--color-amber-500) 70%, transparent);
+    }
+
+    &.is-tap {
+      scale: 0.86;
+    }
+  }
+
+  .cap__mic {
+    display: grid;
+    place-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-stone-800);
+    border: 1px solid var(--color-stone-600);
+    color: var(--color-stone-300);
+    transition:
+      color 0.3s,
+      background-color 0.3s,
+      border-color 0.3s;
+
+    &.is-live {
+      color: var(--color-amber-400);
+      border-color: var(--color-amber-500);
+      background: var(--color-amber-950);
+      animation: cap-mic 1s ease-in-out infinite;
+    }
+  }
+
+  .cap__mic :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  @keyframes cap-mic {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-amber-500) 35%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 0 12px color-mix(in oklch, var(--color-amber-500) 0%, transparent);
+    }
+  }
+
+  /* ── Saved toast ── */
+  .cap__toast {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 24px 36px;
+    background: linear-gradient(180deg, oklch(20% 0.04 160 / 0) 0%, oklch(25% 0.06 160) 35%, oklch(28% 0.07 155) 100%);
+    opacity: 0;
+    transform: translateY(40px);
+    pointer-events: none;
+    transition:
+      opacity 0.4s var(--ease-out-quart),
+      transform 0.5s var(--ease-out-quart);
+
+    &.is-on {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .cap__toast-icon {
+    display: grid;
+    place-content: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: oklch(55% 0.12 160);
+    color: var(--color-stone-50);
+  }
+
+  .cap__toast-icon :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .cap__toast-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-stone-50);
+  }
+
+  .cap__toast-detail {
+    min-height: 1.4em;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: oklch(78% 0.03 160);
+  }
+
+  /* ── Example chips ── */
+  .cap__try {
+    display: grid;
+    justify-items: center;
+    gap: 0.6rem;
+  }
+
+  .cap__try-label {
+    font-size: 0.85rem;
+    color: var(--color-stone-400);
+  }
+
+  .cap__chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .cap__chip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--color-stone-800);
+    border-radius: 999px;
+    background: var(--color-stone-900);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-stone-400);
+    cursor: pointer;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background-color 0.2s;
+
+    &:hover {
+      color: var(--color-stone-100);
+      border-color: var(--color-stone-600);
+    }
+
+    &[aria-pressed='true'] {
+      color: var(--color-amber-300);
+      border-color: color-mix(in oklch, var(--color-amber-500) 55%, transparent);
+      background: color-mix(in oklch, var(--color-amber-500) 10%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-amber-400);
+      outline-offset: 2px;
+    }
+  }
+
+  .cap__chip :global(svg) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cap__mirror.is-instant :global(mark) {
+    animation-duration: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cap__row,
+    .cap__toast,
+    .cap__discard,
+    .cap__save {
+      transition: none;
+    }
+
+    .cap__mirror :global(mark) {
+      animation-duration: 0s;
+    }
+  }
+</style>
